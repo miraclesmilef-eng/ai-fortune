@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI占い師 ✨ デイリー鑑定</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #0d0521;
+      --bg-card: #1a0f35;
+      --gold: #D4AF37;
+      --gold-light: #F0D060;
+      --cream: #FFF8E7;
+      --lavender: #C9B8E8;
+      --text-main: #EDE0FF;
+      --text-muted: #9B8EC4;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg-deep);
+      background-image: radial-gradient(ellipse at top, #2d1060 0%, #0d0521 60%);
+      color: var(--text-main);
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    h1 {
+      font-family: 'Cinzel', 'Times New Roman', serif;
+      font-size: 2rem;
+      color: var(--gold);
+      text-align: center;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.4rem;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: var(--lavender);
+      font-style: italic;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    .stars {
+      text-align: center;
+      font-size: 1rem;
+      letter-spacing: 0.4rem;
+      color: var(--gold);
+      opacity: 0.5;
+      margin: 0.8rem 0;
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .panel-title {
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    label {
+      display: block;
+      color: var(--lavender);
+      font-size: 0.88rem;
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.05em;
+    }
+
+    input[type="date"],
+    input[type="password"] {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 8px;
+      color: var(--cream);
+      padding: 0.65rem 0.9rem;
+      font-family: 'Crimson Text', serif;
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+      color-scheme: dark;
+    }
+
+    input:focus { border-color: var(--gold); }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .theme-btn {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 8px;
+      color: var(--lavender);
+      padding: 0.7rem 0.5rem;
+      font-family: 'Crimson Text', serif;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .theme-btn:hover {
+      background: rgba(212, 175, 55, 0.1);
+      border-color: rgba(212, 175, 55, 0.5);
+      color: var(--gold-light);
+    }
+
+    .theme-btn.active {
+      background: rgba(212, 175, 55, 0.18);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(135deg, #6B3FA0, #D4AF37);
+      border: none;
+      border-radius: 8px;
+      color: #0d0521;
+      padding: 1rem;
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-primary:active { transform: scale(0.99); }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.35);
+      border-radius: 8px;
+      color: var(--lavender);
+      padding: 0.7rem 2rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.88rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .card-display {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem 1rem;
+    }
+
+    .lenormand-card {
+      width: 160px;
+      height: 230px;
+      background: linear-gradient(160deg, #1f1245, #0d0521);
+      border: 2px solid var(--gold);
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+      position: relative;
+      box-shadow:
+        0 0 20px rgba(212, 175, 55, 0.15),
+        inset 0 0 30px rgba(212, 175, 55, 0.04);
+    }
+
+    .card-corner {
+      position: absolute;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      color: rgba(212, 175, 55, 0.6);
+      letter-spacing: 0.05em;
+    }
+
+    .card-corner.top-left { top: 0.55rem; left: 0.6rem; }
+    .card-corner.bottom-right {
+      bottom: 0.55rem;
+      right: 0.6rem;
+      transform: rotate(180deg);
+    }
+
+    .card-divider-top,
+    .card-divider-bottom {
+      position: absolute;
+      width: calc(100% - 1.5rem);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.4), transparent);
+    }
+
+    .card-divider-top { top: 2rem; }
+    .card-divider-bottom { bottom: 2rem; }
+
+    .card-emoji {
+      font-size: 3.8rem;
+      margin-bottom: 0.3rem;
+      filter: drop-shadow(0 0 8px rgba(212,175,55,0.3));
+    }
+
+    .card-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+
+    .card-meaning-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      text-align: center;
+      font-style: italic;
+      max-width: 280px;
+      line-height: 1.5;
+    }
+
+    .sign-badge {
+      display: inline-block;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 20px;
+      padding: 0.25rem 1rem;
+      font-size: 0.88rem;
+      color: var(--gold);
+      margin-top: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    .reading-text {
+      color: var(--cream);
+      line-height: 2.1;
+      white-space: pre-wrap;
+      font-size: 1.05rem;
+    }
+
+    .today-message {
+      border-top: 1px solid rgba(212, 175, 55, 0.25);
+      margin-top: 1.2rem;
+      padding-top: 1rem;
+      color: var(--gold-light);
+      font-style: italic;
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 2px solid rgba(212, 175, 55, 0.2);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-text {
+      color: var(--lavender);
+      margin-top: 0.8rem;
+      font-size: 0.95rem;
+      font-style: italic;
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+    }
+
+    .cta-btn {
+      display: block;
+      text-align: center;
+      padding: 0.9rem 0.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      transition: opacity 0.2s;
+    }
+
+    .cta-btn:hover { opacity: 0.85; }
+
+    .cta-line {
+      background: #06C755;
+      color: white;
+    }
+
+    .cta-note {
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: var(--gold);
+    }
+
+    .error-msg {
+      color: #F09595;
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+      padding: 0.6rem 0.8rem;
+      background: rgba(240, 149, 149, 0.08);
+      border-radius: 6px;
+      border: 1px solid rgba(240, 149, 149, 0.2);
+    }
+
+    .hidden { display: none; }
+
+    .api-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: -0.8rem;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .theme-label {
+      color: var(--lavender);
+      font-size: 0.88rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <h1>✨ AI 占い師 ✨</h1>
+    <p class="subtitle">星とカードが、あなたの今日を照らします</p>
+    <div class="stars">⋆ ✦ ⋆ ✦ ⋆</div>
+
+    <!-- Setup screen -->
+    <div id="step-setup">
+
+      <div class="panel">
+        <p class="panel-title">APIキー設定</p>
+        <label for="apiKey">Claude APIキー</label>
+        <input type="password" id="apiKey" placeholder="sk-ant-api03-..." autocomplete="off" />
+        <p class="api-note">※ 入力したキーはこのブラウザ内のみで使用されます。セッション終了後は破棄されます。</p>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">鑑定の準備</p>
+
+        <label for="birthdate">生年月日</label>
+        <input type="date" id="birthdate" max="2010-12-31" />
+
+        <p class="theme-label">鑑定テーマを選んでください</p>
+        <div class="theme-grid">
+          <button class="theme-btn" data-theme="恋愛・人間関係">💕 恋愛・人間関係</button>
+          <button class="theme-btn" data-theme="仕事・キャリア">💼 仕事・キャリア</button>
+          <button class="theme-btn" data-theme="金運・お金">💰 金運・お金</button>
+          <button class="theme-btn" data-theme="総合運">🌟 総合運</button>
+        </div>
+
+        <div id="error-msg" class="error-msg hidden"></div>
+        <button class="btn-primary" id="btn-draw" onclick="drawCard()">カードを引く ✨</button>
+      </div>
+
+    </div>
+
+    <!-- Result screen -->
+    <div id="step-result" class="hidden">
+
+      <div class="panel">
+        <p class="panel-title">今日のルノルマンカード</p>
+        <div class="card-display">
+          <div class="lenormand-card">
+            <span class="card-corner top-left" id="result-card-num"></span>
+            <div class="card-divider-top"></div>
+            <span class="card-emoji" id="result-card-emoji"></span>
+            <span class="card-name" id="result-card-name"></span>
+            <div class="card-divider-bottom"></div>
+            <span class="card-corner bottom-right" id="result-card-num2"></span>
+          </div>
+          <p class="card-meaning-text" id="result-card-meaning"></p>
+          <span class="sign-badge" id="result-sign"></span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">今日の鑑定</p>
+        <div id="reading-content">
+          <div style="text-align: center; padding: 2.5rem;">
+            <div class="spinner"></div>
+            <p class="loading-text">星とカードが語りかけています…</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">もっと詳しく知りたい方へ</p>
+        <div class="cta-grid">
+          <a href="https://lin.ee/XXXXXXX" class="cta-btn cta-line" target="_blank" rel="noopener">
+            📱 LINEで詳細鑑定
+          </a>
+          <a href="https://note.com/XXXXXXX" class="cta-btn cta-note" target="_blank" rel="noopener">
+            📖 noteで記事を読む
+          </a>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 0.5rem; margin-bottom: 1rem;">
+        <button class="btn-secondary" onclick="resetApp()">もう一度引く</button>
+      </div>
+
+    </div>
+
+    <div class="stars" style="margin-top: 1rem;">⋆ ✦ ⋆ ✦ ⋆</div>
+
+  </div>
+
+  <script>
+    const LENORMAND = [
+      { id: 1,  name: '騎士',         emoji: '🐴', meaning: '知らせ・スピード・若い男性' },
+      { id: 2,  name: 'クローバー',   emoji: '🍀', meaning: '幸運・チャンス・小さな喜び' },
+      { id: 3,  name: '船',           emoji: '⛵', meaning: '旅・遠距離・新しい冒険' },
+      { id: 4,  name: '家',           emoji: '🏠', meaning: '家庭・安心・プライベート' },
+      { id: 5,  name: '木',           emoji: '🌳', meaning: '健康・成長・忍耐' },
+      { id: 6,  name: '雲',           emoji: '☁️', meaning: '不安・迷い・不明瞭' },
+      { id: 7,  name: '蛇',           emoji: '🐍', meaning: '誘惑・複雑さ・賢さ' },
+      { id: 8,  name: '棺',           emoji: '⚰️', meaning: '終わり・変容・手放す' },
+      { id: 9,  name: '花束',         emoji: '💐', meaning: '喜び・贈り物・社交' },
+      { id: 10, name: '鎌',           emoji: '🌾', meaning: '決断・収穫・別れ' },
+      { id: 11, name: '鞭（争い）',   emoji: '⚡', meaning: '葛藤・繰り返し・情熱' },
+      { id: 12, name: '鳥',           emoji: '🦅', meaning: '会話・不安・二人組' },
+      { id: 13, name: '子供',         emoji: '🌱', meaning: '新しい始まり・無邪気さ・可能性' },
+      { id: 14, name: '狐',           emoji: '🦊', meaning: '策略・洞察・自己中心' },
+      { id: 15, name: '熊',           emoji: '🐻', meaning: '力・保護・財力' },
+      { id: 16, name: '星',           emoji: '⭐', meaning: '希望・導き・夢' },
+      { id: 17, name: 'コウノトリ',   emoji: '🦩', meaning: '変化・移動・新局面' },
+      { id: 18, name: '犬',           emoji: '🐕', meaning: '友情・信頼・忠誠' },
+      { id: 19, name: '塔',           emoji: '🏰', meaning: '孤独・権威・組織' },
+      { id: 20, name: '庭',           emoji: '🌸', meaning: '社会・公共・人との出会い' },
+      { id: 21, name: '山',           emoji: '⛰️', meaning: '障害・挑戦・停滞' },
+      { id: 22, name: '十字路',       emoji: '🛤️', meaning: '選択・岐路・方向性' },
+      { id: 23, name: 'ネズミ',       emoji: '🐭', meaning: '損失・減少・焦り' },
+      { id: 24, name: 'ハート',       emoji: '❤️', meaning: '愛情・感情・温かさ' },
+      { id: 25, name: '指輪',         emoji: '💍', meaning: '約束・契約・絆' },
+      { id: 26, name: '本',           emoji: '📚', meaning: '秘密・知識・学び' },
+      { id: 27, name: '手紙',         emoji: '✉️', meaning: 'メッセージ・連絡・情報' },
+      { id: 28, name: '男性',         emoji: '🌊', meaning: '男性的エネルギー・主体性' },
+      { id: 29, name: '女性',         emoji: '🌺', meaning: '女性的エネルギー・受容性' },
+      { id: 30, name: '百合',         emoji: '⚜️', meaning: '純粋さ・品格・調和' },
+      { id: 31, name: '太陽',         emoji: '☀️', meaning: '成功・活力・喜び' },
+      { id: 32, name: '月',           emoji: '🌙', meaning: '直感・感情・夢' },
+      { id: 33, name: '鍵',           emoji: '🗝️', meaning: '解決・答え・達成' },
+      { id: 34, name: '魚',           emoji: '🐟', meaning: '豊かさ・流れ・ビジネス' },
+      { id: 35, name: '錨',           emoji: '⚓', meaning: '安定・忍耐・基盤' },
+      { id: 36, name: '十字架',       emoji: '✝️', meaning: '試練・宿命・信念' },
+    ];
+
+    function getSunSign(dateStr) {
+      const d = new Date(dateStr);
+      const m = d.getMonth() + 1;
+      const day = d.getDate();
+      const md = m * 100 + day;
+      if (md >= 1222 || md <= 119) return '山羊座 ♑';
+      if (md <= 218) return '水瓶座 ♒';
+      if (md <= 320) return '魚座 ♓';
+      if (md <= 419) return '牡羊座 ♈';
+      if (md <= 520) return '牡牛座 ♉';
+      if (md <= 621) return '双子座 ♊';
+      if (md <= 722) return '蟹座 ♋';
+      if (md <= 822) return '獅子座 ♌';
+      if (md <= 922) return '乙女座 ♍';
+      if (md <= 1023) return '天秤座 ♎';
+      if (md <= 1121) return '蠍座 ♏';
+      return '射手座 ♐';
+    }
+
+    let selectedTheme = '';
+
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedTheme = btn.dataset.theme;
+      });
+    });
+
+    function showError(msg) {
+      const el = document.getElementById('error-msg');
+      el.textContent = msg;
+      el.classList.remove('hidden');
+    }
+
+    function hideError() {
+      document.getElementById('error-msg').classList.add('hidden');
+    }
+
+    async function drawCard() {
+      hideError();
+      const apiKey = document.getElementById('apiKey').value.trim();
+      const birthdate = document.getElementById('birthdate').value;
+
+      if (!apiKey) return showError('APIキーを入力してください');
+      if (!birthdate) return showError('生年月日を選択してください');
+      if (!selectedTheme) return showError('鑑定テーマを選んでください');
+
+      sessionStorage.setItem('fortune_api_key', apiKey);
+
+      const card = LENORMAND[Math.floor(Math.random() * 36)];
+      const sign = getSunSign(birthdate);
+
+      document.getElementById('result-card-num').textContent = card.id;
+      document.getElementById('result-card-num2').textContent = card.id;
+      document.getElementById('result-card-emoji').textContent = card.emoji;
+      document.getElementById('result-card-name').textContent = card.name;
+      document.getElementById('result-card-meaning').textContent = card.meaning;
+      document.getElementById('result-sign').textContent = sign;
+
+      document.getElementById('step-setup').classList.add('hidden');
+      document.getElementById('step-result').classList.remove('hidden');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      await getReading(apiKey, sign, card, selectedTheme);
+    }
+
+    async function getReading(apiKey, sign, card, theme) {
+      const today = new Date().toLocaleDateString('ja-JP', {
+        year: 'numeric', month: 'long', day: 'numeric', weekday: 'long'
+      });
+
+      try {
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'x-api-key': apiKey,
+            'anthropic-version': '2023-06-01',
+            'content-type': 'application/json',
+            'anthropic-dangerous-direct-browser-access': 'true'
+          },
+          body: JSON.stringify({
+            model: 'claude-haiku-4-5-20251001',
+            max_tokens: 700,
+            system: `あなたは優しく寄り添いながら、時に愛情ある厳しさで本質を突くAI占い師です。
+ルノルマンカードと太陽星座を組み合わせたデイリー鑑定を日本語で行います。
+
+文体のルール:
+- 柔らかく女性らしく、温かみのある言葉遣い
+- 「〜ですね」「〜かもしれません」「〜してみてください」など、寄り添う語尾
+- 時折、愛のある厳しさで核心を突く（「でも、正直に言うとすれば…」などで導入）
+- 読者を「あなた」と呼ぶ
+
+鑑定文: 300〜350文字
+最後に区切り線と「今日のひと言」を追加
+
+出力形式:
+[鑑定文]
+
+---今日のひと言---
+[一言メッセージ（40文字以内）]`,
+            messages: [{
+              role: 'user',
+              content: `日付: ${today}
+太陽星座: ${sign}
+引いたカード: 第${card.id}番「${card.name}」（キーワード: ${card.meaning}）
+鑑定テーマ: ${theme}
+
+今日の${theme}のデイリー鑑定をお願いします。`
+            }]
+          })
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error?.message || `APIエラー (${res.status})`);
+        }
+
+        const data = await res.json();
+        const text = data.content[0].text;
+
+        const parts = text.split('---今日のひと言---');
+        const mainText = parts[0].trim();
+        const todayMsg = parts[1]?.trim() || '';
+
+        document.getElementById('reading-content').innerHTML =
+          `<p class="reading-text">${escapeHtml(mainText)}</p>` +
+          (todayMsg ? `<div class="today-message">✨ ${escapeHtml(todayMsg)} ✨</div>` : '');
+
+      } catch (e) {
+        document.getElementById('reading-content').innerHTML =
+          `<p style="color: #F09595; font-size: 0.95rem;">エラーが発生しました：${escapeHtml(e.message)}</p>
+           <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 0.5rem;">APIキーをご確認の上、再度お試しください。</p>`;
+      }
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function resetApp() {
+      selectedTheme = '';
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('step-setup').classList.remove('hidden');
+      document.getElementById('step-result').classList.add('hidden');
+      document.getElementById('reading-content').innerHTML =
+        `<div style="text-align: center; padding: 2.5rem;">
+           <div class="spinner"></div>
+           <p class="loading-text">星とカードが語りかけています…</p>
+         </div>`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const savedKey = sessionStorage.getItem('fortune_api_key');
+    if (savedKey) document.getElementById('apiKey').value = savedKey;
+  </script>
+</body>
+</html>
