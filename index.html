@@ -27,117 +27,113 @@
       line-height: 1.8;
     }
     .container { max-width: 680px; margin: 0 auto; padding: 2.5rem 1.5rem; }
-    h1 {
-      font-family: 'Cinzel', 'Times New Roman', serif;
-      font-size: 2rem; color: var(--gold);
-      text-align: center; letter-spacing: 0.12em; margin-bottom: 0.4rem;
-    }
+    h1 { font-family: 'Cinzel', serif; font-size: 2rem; color: var(--gold); text-align: center; letter-spacing: 0.12em; margin-bottom: 0.4rem; }
     .subtitle { text-align: center; color: var(--lavender); font-style: italic; margin-bottom: 2rem; font-size: 1rem; }
     .stars { text-align: center; font-size: 1rem; letter-spacing: 0.4rem; color: var(--gold); opacity: 0.5; margin: 0.8rem 0; }
-    .panel {
-      background: var(--bg-card);
-      border: 1px solid rgba(212,175,55,0.3);
-      border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;
-    }
-    .panel-title {
-      font-family: 'Cinzel', serif; color: var(--gold);
-      font-size: 0.85rem; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.9;
-    }
+    .panel { background: var(--bg-card); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .panel-title { font-family: 'Cinzel', serif; color: var(--gold); font-size: 0.85rem; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.9; }
     label { display: block; color: var(--lavender); font-size: 0.88rem; margin-bottom: 0.3rem; letter-spacing: 0.05em; }
     input[type="date"] {
-      width: 100%; background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(212,175,55,0.3); border-radius: 8px;
-      color: var(--cream); padding: 0.65rem 0.9rem;
+      width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 8px; color: var(--cream); padding: 0.65rem 0.9rem;
       font-family: 'Crimson Text', serif; font-size: 1rem; margin-bottom: 1.2rem;
-      outline: none; transition: border-color 0.2s; -webkit-appearance: none; color-scheme: dark;
+      outline: none; transition: border-color 0.2s; color-scheme: dark;
     }
     input:focus { border-color: var(--gold); }
     .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 1.2rem; }
     .theme-btn {
       background: rgba(255,255,255,0.04); border: 1px solid rgba(212,175,55,0.25);
       border-radius: 8px; color: var(--lavender); padding: 0.7rem 0.5rem;
-      font-family: 'Crimson Text', serif; font-size: 0.95rem;
-      cursor: pointer; transition: all 0.2s; text-align: center;
+      font-family: 'Crimson Text', serif; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; text-align: center;
     }
     .theme-btn:hover { background: rgba(212,175,55,0.1); border-color: rgba(212,175,55,0.5); color: var(--gold-light); }
     .theme-btn.active { background: rgba(212,175,55,0.18); border-color: var(--gold); color: var(--gold); }
     .btn-primary {
       width: 100%; background: linear-gradient(135deg, #6B3FA0, #D4AF37);
       border: none; border-radius: 8px; color: #0d0521;
-      padding: 1rem; font-family: 'Cinzel', serif;
-      font-size: 1rem; letter-spacing: 0.12em; cursor: pointer;
-      transition: opacity 0.2s, transform 0.1s; font-weight: 600;
+      padding: 1rem; font-family: 'Cinzel', serif; font-size: 1rem;
+      letter-spacing: 0.12em; cursor: pointer; transition: opacity 0.2s; font-weight: 600;
     }
     .btn-primary:hover { opacity: 0.9; }
-    .btn-primary:active { transform: scale(0.99); }
     .btn-secondary {
-      background: transparent; border: 1px solid rgba(212,175,55,0.35);
-      border-radius: 8px; color: var(--lavender); padding: 0.7rem 2rem;
-      font-family: 'Cinzel', serif; font-size: 0.88rem; letter-spacing: 0.1em;
-      cursor: pointer; transition: all 0.2s; display: block; margin: 0 auto;
+      background: transparent; border: 1px solid rgba(212,175,55,0.35); border-radius: 8px;
+      color: var(--lavender); padding: 0.7rem 2rem; font-family: 'Cinzel', serif;
+      font-size: 0.88rem; letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s; display: block; margin: 0 auto;
     }
     .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
-    .card-display { display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1rem; }
-    .lenormand-card {
-      width: 160px; height: 230px;
-      background: linear-gradient(160deg, #1f1245, #0d0521);
-      border: 2px solid var(--gold); border-radius: 14px;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      margin-bottom: 1.2rem; position: relative;
-      box-shadow: 0 0 20px rgba(212,175,55,0.15), inset 0 0 30px rgba(212,175,55,0.04);
+    .remaining-badge {
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 8px; padding: 0.5rem 0.9rem; margin-bottom: 1.2rem; font-size: 0.88rem;
     }
-    .card-corner {
-      position: absolute; font-family: 'Cinzel', serif;
-      font-size: 0.72rem; color: rgba(212,175,55,0.6); letter-spacing: 0.05em;
-    }
-    .card-corner.tl { top: 0.55rem; left: 0.6rem; }
-    .card-corner.br { bottom: 0.55rem; right: 0.6rem; transform: rotate(180deg); }
-    .card-divider {
-      position: absolute; width: calc(100% - 1.5rem); height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.4), transparent);
-    }
-    .card-divider.top { top: 2rem; }
-    .card-divider.bottom { bottom: 2rem; }
-    .card-emoji { font-size: 3.8rem; margin-bottom: 0.3rem; filter: drop-shadow(0 0 8px rgba(212,175,55,0.3)); }
-    .card-name { font-family: 'Cinzel', serif; font-size: 0.85rem; color: var(--gold); letter-spacing: 0.08em; }
-    .card-meaning-text { font-size: 0.88rem; color: var(--text-muted); text-align: center; font-style: italic; max-width: 280px; line-height: 1.5; }
-    .sign-badge {
-      display: inline-block; background: rgba(212,175,55,0.12);
-      border: 1px solid rgba(212,175,55,0.35); border-radius: 20px;
-      padding: 0.25rem 1rem; font-size: 0.88rem; color: var(--gold); margin-top: 0.8rem; letter-spacing: 0.05em;
-    }
-    .reading-text { color: var(--cream); line-height: 2.1; font-size: 1.05rem; }
-    .today-message {
-      border-top: 1px solid rgba(212,175,55,0.25); margin-top: 1.2rem; padding-top: 1rem;
-      color: var(--gold-light); font-style: italic; text-align: center; font-size: 1rem; line-height: 1.6;
-    }
-    .cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-    .cta-btn {
-      display: block; text-align: center; padding: 0.9rem 0.5rem; border-radius: 8px;
-      text-decoration: none; font-family: 'Cinzel', serif;
-      font-size: 0.82rem; letter-spacing: 0.08em; transition: opacity 0.2s;
-    }
-    .cta-btn:hover { opacity: 0.85; }
-    .cta-line { background: #06C755; color: white; }
-    .cta-note { background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.4); color: var(--gold); }
+    .remaining-count { color: var(--gold); font-family: 'Cinzel', serif; font-size: 1rem; }
     .error-msg {
       color: #F09595; font-size: 0.9rem; margin-bottom: 0.8rem;
       padding: 0.6rem 0.8rem; background: rgba(240,149,149,0.08);
       border-radius: 6px; border: 1px solid rgba(240,149,149,0.2);
     }
     .hidden { display: none; }
-    .theme-label { color: var(--lavender); font-size: 0.88rem; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
-    .remaining-badge {
-      display: flex; align-items: center; justify-content: space-between;
-      background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.25);
-      border-radius: 8px; padding: 0.5rem 0.9rem; margin-bottom: 1.2rem;
-      font-size: 0.88rem;
+
+    /* 3枚スプレッド */
+    .spread-row { display: flex; gap: 0.8rem; justify-content: center; margin-bottom: 1.2rem; }
+    .spread-item { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; flex: 1; max-width: 140px; }
+    .spread-pos { font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase; }
+    .s-card {
+      width: 100%; aspect-ratio: 2/3;
+      background: linear-gradient(160deg, #1f1245, #0d0521);
+      border: 1.5px solid var(--gold); border-radius: 10px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      position: relative; gap: 0.2rem;
+      box-shadow: 0 0 14px rgba(212,175,55,0.12);
     }
-    .remaining-count { color: var(--gold); font-family: 'Cinzel', serif; font-size: 1rem; }
+    .s-card-num { font-family: 'Cinzel', serif; font-size: 0.65rem; color: rgba(212,175,55,0.55); position: absolute; top: 0.4rem; left: 0.45rem; }
+    .s-card-line {
+      position: absolute; width: calc(100% - 1.2rem); height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.35), transparent);
+    }
+    .s-card-line.top { top: 1.5rem; }
+    .s-card-line.bottom { bottom: 1.5rem; }
+    .s-card-emoji { font-size: 2.2rem; filter: drop-shadow(0 0 6px rgba(212,175,55,0.25)); }
+    .s-card-name { font-family: 'Cinzel', serif; font-size: 0.72rem; color: var(--gold); letter-spacing: 0.05em; }
+    .spread-label { font-size: 0.8rem; color: var(--lavender); font-style: italic; }
+
+    /* 鑑定文 */
+    .reading-section { margin-top: 0.5rem; }
+    .reading-text { color: var(--cream); line-height: 2.1; font-size: 1rem; }
+    .reading-pos-title { font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--gold); letter-spacing: 0.12em; margin-top: 1rem; margin-bottom: 0.2rem; opacity: 0.85; }
+    .today-msg { border-top: 1px solid rgba(212,175,55,0.25); margin-top: 1.2rem; padding-top: 1rem; color: var(--gold-light); font-style: italic; text-align: center; font-size: 1rem; }
+    .spread-divider { border: none; border-top: 1px solid rgba(212,175,55,0.2); margin: 1.5rem 0; }
+
+    /* 深層スプレッド（ぼかし） */
+    .deep-panel-title { font-family: 'Cinzel', serif; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .deep-intro { font-size: 0.9rem; color: var(--lavender); font-style: italic; margin-bottom: 1.2rem; line-height: 1.7; }
+    .blur-wrap { position: relative; overflow: hidden; border-radius: 8px; }
+    .blur-text { color: var(--cream); line-height: 2.1; font-size: 1rem; filter: blur(5px); user-select: none; pointer-events: none; opacity: 0.6; }
+    .blur-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 0%, var(--bg-card) 65%);
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 1rem;
+    }
+    .cta-note {
+      display: block; text-align: center; padding: 0.9rem 1.5rem;
+      border-radius: 8px; text-decoration: none; font-family: 'Cinzel', serif;
+      font-size: 0.85rem; letter-spacing: 0.08em; transition: opacity 0.2s;
+      background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.5); color: var(--gold);
+    }
+    .cta-note:hover { opacity: 0.85; }
+    .cta-note-full { display: block; text-align: center; padding: 0.9rem; border-radius: 8px; text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.08em; transition: opacity 0.2s; background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.5); color: var(--gold); }
+    .cta-note-full:hover { opacity: 0.85; }
+
+    /* ロック画面 */
     .locked-panel { text-align: center; padding: 2rem 1rem; }
     .locked-icon { font-size: 3rem; margin-bottom: 1rem; }
     .locked-title { font-family: 'Cinzel', serif; color: var(--gold); font-size: 1.2rem; letter-spacing: 0.1em; margin-bottom: 0.8rem; }
     .locked-text { color: var(--lavender); line-height: 1.9; margin-bottom: 1.5rem; font-size: 0.95rem; }
+
+    @media (max-width: 480px) {
+      .spread-row { gap: 0.5rem; }
+      .s-card-emoji { font-size: 1.8rem; }
+    }
   </style>
 </head>
 <body>
@@ -152,26 +148,23 @@
       <div class="locked-panel">
         <div class="locked-icon">🔮</div>
         <p class="locked-title">本日の無料鑑定は終了しました</p>
-        <p class="locked-text">
-          一日3回の無料鑑定をお使いいただきありがとうございます。<br>
-          続きはLINEで詳細鑑定をお受けください。<br>
-          明日またお越しいただければ、新しい鑑定が始まります。
-        </p>
-        <a href="https://note.com/sumina_kiko" class="cta-btn cta-note" style="display:block;" target="_blank" rel="noopener">📖 noteで記事を読む</a>
+        <p class="locked-text">一日2回の無料鑑定をお使いいただきありがとうございます。<br>明日またお越しいただければ、新しい鑑定が始まります。</p>
+        <a href="https://note.com/sumina_kiko" class="cta-note-full" target="_blank" rel="noopener">📖 noteで詳しい解説を読む</a>
       </div>
     </div>
   </div>
 
+  <!-- 入力画面 -->
   <div id="step-setup">
     <div class="panel">
       <p class="panel-title">鑑定の準備</p>
       <div class="remaining-badge">
         <span style="color:var(--text-muted);">本日の残り無料鑑定</span>
-        <span class="remaining-count" id="remaining-count">3回</span>
+        <span class="remaining-count" id="remaining-count">2回</span>
       </div>
       <label for="birthdate">生年月日</label>
       <input type="date" id="birthdate" max="2010-12-31" />
-      <p class="theme-label">鑑定テーマを選んでください</p>
+      <p style="color:var(--lavender);font-size:0.88rem;margin-bottom:0.5rem;letter-spacing:0.05em;">鑑定テーマを選んでください</p>
       <div class="theme-grid">
         <button class="theme-btn" data-theme="love">💕 恋愛・人間関係</button>
         <button class="theme-btn" data-theme="work">💼 仕事・キャリア</button>
@@ -179,39 +172,36 @@
         <button class="theme-btn" data-theme="general">🌟 総合運</button>
       </div>
       <div id="error-msg" class="error-msg hidden"></div>
-      <button class="btn-primary" onclick="drawCard()">カードを引く ✨</button>
+      <button class="btn-primary" onclick="drawCards()">カードを引く ✨</button>
     </div>
   </div>
 
+  <!-- 結果画面 -->
   <div id="step-result" class="hidden">
+
+    <!-- Spread 1: 心・言葉・行動 -->
     <div class="panel">
-      <p class="panel-title">今日のルノルマンカード</p>
-      <div class="card-display">
-        <div class="lenormand-card">
-          <span class="card-corner tl" id="r-num"></span>
-          <div class="card-divider top"></div>
-          <span class="card-emoji" id="r-emoji"></span>
-          <span class="card-name" id="r-name"></span>
-          <div class="card-divider bottom"></div>
-          <span class="card-corner br" id="r-num2"></span>
+      <p class="panel-title">心 · 言葉 · 行動</p>
+      <div class="spread-row" id="spread1-cards"></div>
+      <div class="reading-section" id="spread1-reading"></div>
+    </div>
+
+    <!-- Spread 2: 潜在・顕在・可能性 -->
+    <div class="panel">
+      <p class="deep-panel-title">潜在 · 顕在 · 可能性</p>
+      <p class="deep-intro">あなたの深層に眠るメッセージが、3枚のカードに宿っています。</p>
+      <div class="spread-row" id="spread2-cards"></div>
+      <div class="blur-wrap" id="spread2-blur-wrap">
+        <div class="blur-text" id="spread2-reading"></div>
+        <div class="blur-overlay">
+          <a href="https://note.com/sumina_kiko" class="cta-note" target="_blank" rel="noopener">
+            🔓 続きの深層読みはnoteで →
+          </a>
         </div>
-        <p class="card-meaning-text" id="r-meaning"></p>
-        <span class="sign-badge" id="r-sign"></span>
       </div>
     </div>
-    <div class="panel">
-      <p class="panel-title">今日の鑑定</p>
-      <p class="reading-text" id="r-body"></p>
-      <div class="today-message" id="r-today"></div>
-    </div>
-    <div class="panel">
-      <p class="panel-title">もっと詳しく知りたい方へ</p>
-      <div class="cta-grid">
-        <a href="https://line.me/ti/p/hbdPzf6CJp" class="cta-btn cta-line" target="_blank" rel="noopener">📱 LINEで詳細鑑定</a>
-        <a href="https://note.com/sumina_kiko" class="cta-btn cta-note" target="_blank" rel="noopener">📖 noteで記事を読む</a>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:0.5rem;margin-bottom:1rem;">
+
+    <div style="text-align:center;margin-bottom:1rem;">
       <button class="btn-secondary" onclick="resetApp()">もう一度引く</button>
     </div>
   </div>
@@ -220,16 +210,18 @@
 </div>
 
 <script>
+const MAX_USES = 2;
+
 const SIGNS = {
-  '牡羊座': { sym:'♈', intro:'情熱と行動の星座・牡羊座のあなたへ。', q:'あなたの直感は本物です。' },
-  '牡牛座': { sym:'♉', intro:'感覚と安定の星座・牡牛座のあなたへ。', q:'焦らずじっくりいきましょう。' },
-  '双子座': { sym:'♊', intro:'好奇心と言葉の星座・双子座のあなたへ。', q:'豊かな感性を信じて。' },
-  '蟹座':   { sym:'♋', intro:'共感と記憶の星座・蟹座のあなたへ。', q:'あなたの温かさが周りを動かします。' },
-  '獅子座': { sym:'♌', intro:'表現と誇りの星座・獅子座のあなたへ。', q:'あなたらしさが最大の武器です。' },
-  '乙女座': { sym:'♍', intro:'誠実と観察の星座・乙女座のあなたへ。', q:'細やかな気づきを大切に。' },
+  '牡羊座': { sym:'♈', intro:'情熱と行動の星座・牡羊座のあなたへ。', q:'直感を信じ、まず動いてみてください。' },
+  '牡牛座': { sym:'♉', intro:'感覚と安定の星座・牡牛座のあなたへ。', q:'焦らずじっくり、あなたのペースで。' },
+  '双子座': { sym:'♊', intro:'好奇心と言葉の星座・双子座のあなたへ。', q:'豊かな感性と言葉が、今日の鍵です。' },
+  '蟹座':   { sym:'♋', intro:'共感と記憶の星座・蟹座のあなたへ。', q:'あなたの温かさが、周りを動かします。' },
+  '獅子座': { sym:'♌', intro:'表現と誇りの星座・獅子座のあなたへ。', q:'あなたらしさが、最大の武器です。' },
+  '乙女座': { sym:'♍', intro:'誠実と観察の星座・乙女座のあなたへ。', q:'細やかな気づきを、大切にしてください。' },
   '天秤座': { sym:'♎', intro:'調和と美の星座・天秤座のあなたへ。', q:'バランスを保ちながら、自分の心も忘れずに。' },
   '蠍座':   { sym:'♏', intro:'深さと変容の星座・蠍座のあなたへ。', q:'あなたの直感は、誰より鋭い。' },
-  '射手座': { sym:'♐', intro:'自由と探求の星座・射手座のあなたへ。', q:'広い視野が、答えを教えてくれます。' },
+  '射手座': { sym:'♐', intro:'自由と探求の星座・射手座のあなたへ。', q:'広い視野が、今日の答えを教えてくれます。' },
   '山羊座': { sym:'♑', intro:'忍耐と実力の星座・山羊座のあなたへ。', q:'着実な一歩が、遠くへ連れていきます。' },
   '水瓶座': { sym:'♒', intro:'独創と未来の星座・水瓶座のあなたへ。', q:'あなたの個性が、時代を先取りしています。' },
   '魚座':   { sym:'♓', intro:'夢と共鳴の星座・魚座のあなたへ。', q:'繊細な感受性が、あなたの宝物です。' },
@@ -238,447 +230,243 @@ const SIGNS = {
 function getSunSign(dateStr) {
   const d = new Date(dateStr), m = d.getMonth()+1, day = d.getDate(), md = m*100+day;
   if (md>=1222||md<=119) return '山羊座';
-  if (md<=218) return '水瓶座';
-  if (md<=320) return '魚座';
-  if (md<=419) return '牡羊座';
-  if (md<=520) return '牡牛座';
-  if (md<=621) return '双子座';
-  if (md<=722) return '蟹座';
-  if (md<=822) return '獅子座';
-  if (md<=922) return '乙女座';
-  if (md<=1023) return '天秤座';
-  if (md<=1121) return '蠍座';
+  if (md<=218) return '水瓶座'; if (md<=320) return '魚座';
+  if (md<=419) return '牡羊座'; if (md<=520) return '牡牛座';
+  if (md<=621) return '双子座'; if (md<=722) return '蟹座';
+  if (md<=822) return '獅子座'; if (md<=922) return '乙女座';
+  if (md<=1023) return '天秤座'; if (md<=1121) return '蠍座';
   return '射手座';
 }
 
 function pick(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
 
 const CARDS = [
-  {
-    id:1, name:'騎士', emoji:'🐴', meaning:'知らせ・スピード・若い男性',
-    base:['待っていた動きが出てくる予感がします。','物事がスピーディーに展開しそうな一日です。'],
-    themes:{
-      love:'好きな人からの連絡や進展が期待できそう。勇気を出してみる価値があります。',
-      work:'重要な情報や依頼が舞い込む予感。素早い対応が良い流れを生みます。',
-      money:'思わぬ収入のチャンスや好機の知らせが届くかもしれません。',
-      general:'行動する日です。受け身にならず、あなたから動いてみてください。'
-    },
-    msg:'動けるときに動く。それが今日のあなたへのメッセージです。'
-  },
-  {
-    id:2, name:'クローバー', emoji:'🍀', meaning:'幸運・チャンス・小さな喜び',
+  { id:1,  name:'騎士',       emoji:'🐴', meaning:'知らせ・スピード',
+    base:['待っていた動きが出てくる予感がします。','物事がスピーディーに展開しそうです。'],
+    themes:{ love:'好きな人からの連絡や進展が期待できそう。勇気を出してみる価値があります。', work:'重要な情報や依頼が舞い込む予感。素早い対応が吉。', money:'思わぬ収入のチャンスの知らせが届くかも。', general:'行動の日です。受け身にならず、あなたから動いて。' },
+    pos:{ heart:'心が「動きたい」と叫んでいます。', word:'「今だ」という一言が、あなたを変えます。', action:'迷わず一歩踏み出してみてください。',
+          hidden:'深層では、変化への渇望が静かに高まっています。', surface:'今のあなたには、行動へのエネルギーが満ちています。', potential:'動けば、想像以上の速さで扉が開きます。' },
+    msg:'動けるときに動く。それが今日のメッセージです。' },
+  { id:2,  name:'クローバー', emoji:'🍀', meaning:'幸運・チャンス',
     base:['小さなラッキーが転がり込んでくる日です。','ふとした瞬間に幸運が宿っています。'],
-    themes:{
-      love:'偶然の出会いや、ちょっとした会話の中に縁が隠れているかもしれません。',
-      work:'タイミングよくチャンスがやってくる予感。軽やかな気持ちで動いてみて。',
-      money:'小さな積み重ねが、着実に実を結ぶ暗示があります。',
-      general:'ポジティブな気持ちが運を引き寄せます。今日はとにかく笑顔でいましょう。'
-    },
-    msg:'幸せは、いつも小さな形でやってきます。'
-  },
-  {
-    id:3, name:'船', emoji:'⛵', meaning:'旅・遠距離・新しい冒険',
+    themes:{ love:'偶然の出会いや会話の中に縁が隠れているかも。', work:'タイミングよくチャンスが来る予感。軽やかに動いて。', money:'小さな積み重ねが着実に実を結ぶ暗示。', general:'ポジティブな気持ちが運を引き寄せます。笑顔でいて。' },
+    pos:{ heart:'心の奥に、期待とときめきが芽生えています。', word:'「きっと大丈夫」という言葉が、あなたを守ります。', action:'小さなことでも、ためらわずに行動してみて。',
+          hidden:'あなたの無意識は、幸運の気配を感じ取っています。', surface:'今のあなたには、自然と良いものが引き寄せられています。', potential:'このチャンスを手にした先に、大きな転機が待っています。' },
+    msg:'幸せは、いつも小さな形でやってきます。' },
+  { id:3,  name:'船',         emoji:'⛵', meaning:'旅・遠距離・冒険',
     base:['新しい世界へ踏み出すエネルギーが高まっています。','遠くへ目を向けると、答えが見えてくるかもしれません。'],
-    themes:{
-      love:'遠距離や新しい出会いに縁のある日。心を開いて、その波に乗ってみて。',
-      work:'新プロジェクトや視野を広げるチャンスが来ています。大胆に動いて。',
-      money:'投資や新しい収入源を検討するのに良いタイミングかもしれません。',
-      general:'現状に縛られず、少し遠くを見てみましょう。新しい景色が待っています。'
-    },
-    msg:'出発の勇気が、あなたの世界を広げます。'
-  },
-  {
-    id:4, name:'家', emoji:'🏠', meaning:'家庭・安心・プライベート',
+    themes:{ love:'遠距離や新しい出会いに縁のある日。心を開いて波に乗って。', work:'新プロジェクトや視野を広げるチャンスが来ています。', money:'投資や新しい収入源を検討するのに良いタイミング。', general:'現状に縛られず、少し遠くを見てみましょう。' },
+    pos:{ heart:'心はずっと、新しい世界を求めていたのです。', word:'「出発」という言葉が、今日のあなたのキーワード。', action:'まず一歩、慣れた場所から外に出てみてください。',
+          hidden:'深層では、変化と冒険への強い憧れが眠っています。', surface:'今のあなたは、新しい流れに乗り始めています。', potential:'この船が向かう先に、あなたらしい新しい人生が広がっています。' },
+    msg:'出発の勇気が、あなたの世界を広げます。' },
+  { id:4,  name:'家',         emoji:'🏠', meaning:'家庭・安心・基盤',
     base:['家族や身近な人との時間が、今日のカギになりそうです。','安心できる場所や人のそばにいることで、力が湧いてきます。'],
-    themes:{
-      love:'パートナーや家族との絆を深めるのに良い日。一緒の時間を大切に。',
-      work:'信頼できる身近な人と協力することで、仕事がうまく回ります。',
-      money:'家計の見直しや固定費の整理をするのに良いタイミングです。',
-      general:'内側を整えることが、すべての基盤になります。今日は「根っこ」を大切に。'
-    },
-    msg:'帰れる場所があることが、進む力になります。'
-  },
-  {
-    id:5, name:'木', emoji:'🌳', meaning:'健康・成長・忍耐',
+    themes:{ love:'パートナーや家族との絆を深めるのに良い日。', work:'信頼できる身近な人と協力することで仕事が回ります。', money:'家計の見直しや固定費の整理をするのに良いタイミング。', general:'内側を整えることが、すべての基盤になります。' },
+    pos:{ heart:'心が求めているのは、安心感と「帰れる場所」です。', word:'「大丈夫」と誰かに伝える言葉が、今日は大切。', action:'身近な人に、感謝の気持ちを伝えてみましょう。',
+          hidden:'深層では、安心と守られることへの深い願いがあります。', surface:'今のあなたは、安全な場所から力を得ています。', potential:'土台を整えた先に、揺るぎない安定が待っています。' },
+    msg:'帰れる場所があることが、進む力になります。' },
+  { id:5,  name:'木',         emoji:'🌳', meaning:'健康・成長・忍耐',
     base:['焦らず着実に育てていくことが、今日のテーマです。','じっくりと根を張る時間が、あなたに必要かもしれません。'],
-    themes:{
-      love:'すぐには結果が出なくても、続けることに意味があります。関係を育てていきましょう。',
-      work:'長期的な視点で取り組むことで、確かな結果がついてきます。',
-      money:'焦った投資より、地道な貯蓄や長期計画が吉です。',
-      general:'健康や体のケアを優先する日。自分の土台を整えることが大切です。'
-    },
-    msg:'大きな木は、見えないところで深く根を張っています。'
-  },
-  {
-    id:6, name:'雲', emoji:'☁️', meaning:'不安・迷い・不明瞭',
+    themes:{ love:'すぐには結果が出なくても、続けることに意味があります。', work:'長期的な視点で取り組むことで確かな結果がついてきます。', money:'地道な貯蓄や長期計画が吉です。', general:'健康や体のケアを優先する日。土台を整えて。' },
+    pos:{ heart:'心の奥では、じっくり育てることの大切さを知っています。', word:'「焦らなくていい」という言葉を、自分に贈ってください。', action:'今日は一つのことをていねいにやりきってみて。',
+          hidden:'あなたの深層には、着実に成長し続ける力があります。', surface:'今のあなたは、静かに、しかし確実に前進しています。', potential:'根を張り続けた先に、やがて大きな実りが訪れます。' },
+    msg:'大きな木は、見えないところで深く根を張っています。' },
+  { id:6,  name:'雲',         emoji:'☁️', meaning:'不安・迷い・不明瞭',
     base:['物事がはっきりしない、もやっとした日かもしれません。','今日は迷いや不安が出やすい時。でも、それは一時的なものです。'],
-    themes:{
-      love:'相手の気持ちが読みにくい日。決断は少し待って、様子を見てみましょう。',
-      work:'情報が不足していたり、方向性が見えにくいかもしれません。焦らず確認を。',
-      money:'不確かな話には慎重に。今日は大きな決断を避けて。',
-      general:'正直に言うと、今日は無理に動かないことも大切な選択です。'
-    },
-    msg:'雲は必ず晴れます。今は、ただ待つ勇気を。'
-  },
-  {
-    id:7, name:'蛇', emoji:'🐍', meaning:'誘惑・複雑さ・賢さ',
-    base:['表面と裏が違う状況や、複雑な関係性に注意が必要な日です。','賢さを使えば、難しい状況も切り抜けられます。'],
-    themes:{
-      love:'気になる人がいるなら、少し慎重に。誘惑や嫉妬に流されないよう、自分の軸を持って。',
-      work:'競争や駆け引きが生じやすい日。情報の扱いには慎重に。',
-      money:'うまい話には必ず裏があります。今日はとくに警戒を。',
-      general:'あなたの賢さが試される日。感情より知性を大切に動きましょう。'
-    },
-    msg:'賢く生きることは、強く生きることと同じです。'
-  },
-  {
-    id:8, name:'棺', emoji:'⚰️', meaning:'終わり・変容・手放す',
+    themes:{ love:'相手の気持ちが読みにくい日。決断は少し待って。', work:'情報が不足していたり方向性が見えにくいかもしれません。', money:'不確かな話には慎重に。大きな決断は避けて。', general:'無理に動かないことも、大切な選択です。' },
+    pos:{ heart:'心の中にモヤがかかっている。それは迷っている証拠。', word:'今日は「わからない」と正直に言っていい日です。', action:'決断を急がず、情報を集めることだけに集中して。',
+          hidden:'深層では、不安と期待が入り混じって揺れています。', surface:'今のあなたは、方向性を探している最中です。', potential:'この迷いが晴れた先に、本当に望むものが見えてきます。' },
+    msg:'雲は必ず晴れます。今は、ただ待つ勇気を。' },
+  { id:7,  name:'蛇',         emoji:'🐍', meaning:'誘惑・複雑さ・賢さ',
+    base:['表面と裏が違う状況や複雑な関係性に注意が必要な日です。','賢さを使えば、難しい状況も切り抜けられます。'],
+    themes:{ love:'誘惑や嫉妬に流されないよう、自分の軸を持って。', work:'競争や駆け引きが生じやすい日。情報の扱いに慎重に。', money:'うまい話には必ず裏があります。警戒を。', general:'感情より知性を大切に動きましょう。' },
+    pos:{ heart:'心の奥に、誰にも言えない本音が潜んでいます。', word:'「慎重に」という言葉が、今日の護符になります。', action:'表面だけで判断せず、本質を見極めてから動いて。',
+          hidden:'あなたの深層には、鋭い洞察力と直感が眠っています。', surface:'今のあなたは、複雑な状況を賢く泳いでいます。', potential:'その賢さを正しく使えば、どんな状況も味方にできます。' },
+    msg:'賢く生きることは、強く生きることと同じです。' },
+  { id:8,  name:'棺',         emoji:'⚰️', meaning:'終わり・変容・手放す',
     base:['何かが終わりを迎え、新しい段階へと移行するタイミングです。','手放すことへの恐れが、前進を妨げているかもしれません。'],
-    themes:{
-      love:'古い感情や未練を手放す時かもしれません。終わりは、新しい愛の始まりです。',
-      work:'今のやり方や役割を見直す時期がきています。変化を恐れないで。',
-      money:'不要な出費や古い習慣をやめることで、流れが変わります。',
-      general:'今日は、もう必要のないものをそっと手放してみてください。軽くなる感覚があるはずです。'
-    },
-    msg:'終わりは、いつも新しい始まりの扉です。'
-  },
-  {
-    id:9, name:'花束', emoji:'💐', meaning:'喜び・贈り物・社交',
+    themes:{ love:'古い感情や未練を手放す時かもしれません。', work:'今のやり方や役割を見直す時期がきています。', money:'不要な出費や古い習慣をやめることで流れが変わります。', general:'もう必要のないものを、そっと手放してみてください。' },
+    pos:{ heart:'心はもう、次のステージへの準備ができています。', word:'「さようなら」という言葉が、次の扉を開けます。', action:'一つだけ、手放すものを決めてみてください。',
+          hidden:'深層では、変容への準備が静かに進んでいます。', surface:'今のあなたは、古い自分との別れの途中にいます。', potential:'手放した先に、生まれ変わった新しいあなたが待っています。' },
+    msg:'終わりは、いつも新しい始まりの扉です。' },
+  { id:9,  name:'花束',       emoji:'💐', meaning:'喜び・贈り物・社交',
     base:['嬉しいことやお祝いごとに縁のある、明るい日です。','誰かから、または誰かへ、温かい気持ちが届く暗示があります。'],
-    themes:{
-      love:'告白や贈り物など、甘い展開が期待できる日。素直な気持ちを伝えてみて。',
-      work:'誰かに感謝を伝えたり、贈り物をする機会があるかも。人脈が広がりやすいです。',
-      money:'プレゼントやご褒美に使うお金は、良い循環を生みます。',
-      general:'今日は人と積極的に交わって。笑顔があなたの最大のお守りです。'
-    },
-    msg:'あなたの笑顔は、周りを幸せにする贈り物です。'
-  },
-  {
-    id:10, name:'鎌', emoji:'🌾', meaning:'決断・収穫・別れ',
-    base:['決断の時がきています。迷っているなら、今日が動くタイミングかもしれません。','何かが区切りを迎え、収穫の時期に入る予感があります。'],
-    themes:{
-      love:'関係の転換点がきているかもしれません。ごまかさず、自分の本音と向き合って。',
-      work:'判断が求められる場面がありそう。思い切った決断が良い結果をもたらします。',
-      money:'収入や契約に動きが出る日。条件はしっかり確認して。',
-      general:'手放すと決めたなら、今日が動きどきです。思い切ることで道が開けます。'
-    },
-    msg:'決断できる勇気が、あなたの人生を収穫の秋に変えます。'
-  },
-  {
-    id:11, name:'鞭（争い）', emoji:'⚡', meaning:'葛藤・繰り返し・情熱',
-    base:['摩擦や繰り返すパターンに気づく必要がある日です。','強いエネルギーが渦巻いています。うまく使えば、大きな力になります。'],
-    themes:{
-      love:'言い争いや誤解が生まれやすい日。言葉を選んで、丁寧に伝えて。',
-      work:'競争や緊張感が高まりやすい時。情熱はあっても、衝動的にならないように。',
-      money:'衝動買いや感情的な出費に注意。一呼吸おいてから行動して。',
-      general:'正直に言うと、今日のあなたはちょっと熱くなりすぎているかもしれません。立ち止まって。'
-    },
-    msg:'情熱は、方向を整えてこそ本物の力になります。'
-  },
-  {
-    id:12, name:'鳥', emoji:'🦅', meaning:'会話・不安・二人組',
-    base:['誰かとの会話や、二人の関係がテーマになる日です。','心配や不安が頭を巡りやすい時。でも、話すことで楽になれます。'],
-    themes:{
-      love:'相手との対話を大切にして。黙っていると誤解を生むことがあります。',
-      work:'チームでの連携が鍵になる日。コミュニケーションを丁寧に取りましょう。',
-      money:'お金に関する相談や情報交換が役に立ちそうです。',
-      general:'一人で抱えないで。信頼できる人に話してみると、霧が晴れるかもしれません。'
-    },
-    msg:'言葉を交わすことで、二つの心はひとつに近づきます。'
-  },
-  {
-    id:13, name:'子供', emoji:'🌱', meaning:'新しい始まり・無邪気さ・可能性',
+    themes:{ love:'告白や贈り物など、甘い展開が期待できる日。', work:'感謝を伝える機会があるかも。人脈が広がりやすいです。', money:'喜んで使うお金は、良い循環を生みます。', general:'積極的に人と交わって。笑顔があなたのお守りです。' },
+    pos:{ heart:'心はいま、誰かに喜んでほしいと思っています。', word:'「ありがとう」という一言が、今日最強の言葉です。', action:'誰かに、小さな親切や贈り物をしてみて。',
+          hidden:'あなたの深層には、人を喜ばせたい気持ちが満ちています。', surface:'今のあなたは、周りに温かさと明るさをもたらしています。', potential:'その笑顔と優しさが、やがて大きな縁と実りを生みます。' },
+    msg:'あなたの笑顔は、周りを幸せにする贈り物です。' },
+  { id:10, name:'鎌',         emoji:'🌾', meaning:'決断・収穫・別れ',
+    base:['決断の時がきています。迷っているなら、今日が動くタイミングです。','何かが区切りを迎え、収穫の時期に入る予感があります。'],
+    themes:{ love:'関係の転換点がきているかもしれません。本音と向き合って。', work:'思い切った決断が良い結果をもたらします。', money:'収入や契約に動きが出る日。条件はしっかり確認して。', general:'手放すと決めたなら、今日が動きどきです。' },
+    pos:{ heart:'心はとっくに答えを知っています。あとは踏み出すだけ。', word:'「決める」という言葉が、今日のあなたを解放します。', action:'今日中に、一つの決断をしてみてください。',
+          hidden:'深層では、変化への準備と覚悟がすでに整っています。', surface:'今のあなたは、重要な岐路に立っています。', potential:'この決断が、次の豊かな収穫への扉を開きます。' },
+    msg:'決断できる勇気が、あなたの人生を実りの秋に変えます。' },
+  { id:11, name:'鞭',         emoji:'⚡', meaning:'葛藤・繰り返し・情熱',
+    base:['摩擦や繰り返すパターンに気づく必要がある日です。','強いエネルギーが渦巻いています。うまく使えば大きな力に。'],
+    themes:{ love:'言い争いや誤解が生まれやすい日。言葉を選んで。', work:'情熱はあっても、衝動的にならないように。', money:'衝動買いや感情的な出費に注意。一呼吸おいてから。', general:'今日のあなたは少し熱くなりすぎているかも。立ち止まって。' },
+    pos:{ heart:'心の中に、強い感情が渦巻いています。', word:'「落ち着いて」という言葉を、まず自分に。', action:'感情を行動に変える前に、10秒だけ深呼吸して。',
+          hidden:'深層では、繰り返してきたパターンへの気づきが生まれています。', surface:'今のあなたは、強いエネルギーをどう使うか試されています。', potential:'この情熱を正しく向ければ、大きな変革を起こせます。' },
+    msg:'情熱は、方向を整えてこそ本物の力になります。' },
+  { id:12, name:'鳥',         emoji:'🦅', meaning:'会話・不安・二人組',
+    base:['誰かとの会話や二人の関係がテーマになる日です。','心配や不安が頭を巡りやすい時。でも、話すことで楽になれます。'],
+    themes:{ love:'相手との対話を大切にして。黙っていると誤解を生みます。', work:'チームでの連携が鍵になる日。丁寧にコミュニケーションを。', money:'お金に関する相談や情報交換が役に立ちそうです。', general:'一人で抱えないで。信頼できる人に話してみると霧が晴れます。' },
+    pos:{ heart:'心の中の言葉を、誰かに伝えたいと思っています。', word:'「話してもいいよ」という言葉が、誰かを救います。', action:'今日は、一人でいる時間より誰かと話す時間を。',
+          hidden:'深層では、つながりへの渇望と、孤独への恐れが共存しています。', surface:'今のあなたには、誰かとの対話が必要な時期です。', potential:'心を開いて話すことで、深いつながりと理解が生まれます。' },
+    msg:'言葉を交わすことで、二つの心は近づいていきます。' },
+  { id:13, name:'子供',       emoji:'🌱', meaning:'新しい始まり・可能性',
     base:['新鮮なスタートを切るエネルギーがあります。','童心に返るような軽やかさが、今日の運気を上げてくれます。'],
-    themes:{
-      love:'純粋な気持ちで向き合うことが、関係を良くする鍵です。素直でいて。',
-      work:'新しいことに挑戦するのに良い日。初心を思い出してみましょう。',
-      money:'小さな金額から始めることが、大きな結果につながります。',
-      general:'こだわりを一度手放して、子どものように楽しんでみる日です。'
-    },
-    msg:'始まりはいつも小さくて、可能性は無限です。'
-  },
-  {
-    id:14, name:'狐', emoji:'🦊', meaning:'策略・洞察・自己中心',
+    themes:{ love:'純粋な気持ちで向き合うことが関係を良くする鍵です。', work:'新しいことに挑戦するのに良い日。初心を思い出して。', money:'小さな金額から始めることが大きな結果につながります。', general:'こだわりを手放して、子どものように楽しんでみる日です。' },
+    pos:{ heart:'心はいま、無邪気な喜びを求めています。', word:'「はじめて」という言葉が、今日の運を開きます。', action:'何か一つ、初めてのことに挑戦してみてください。',
+          hidden:'あなたの深層には、まだ誰にも見せていない可能性が眠っています。', surface:'今のあなたは、新しい自分へと生まれ変わりつつあります。', potential:'この純粋さと好奇心が、無限の可能性を引き出します。' },
+    msg:'始まりはいつも小さくて、可能性は無限です。' },
+  { id:14, name:'狐',         emoji:'🦊', meaning:'策略・洞察・自己中心',
     base:['物事の裏側をよく見ることが必要な日です。','あなた自身の動機も、一度見直してみると良いかもしれません。'],
-    themes:{
-      love:'相手の言葉より行動を見て判断して。感情だけで動くと、見えなくなるものがあります。',
-      work:'誰かの思惑や駆け引きに気をつけて。でも、あなた自身も賢く立ち回れます。',
-      money:'甘い話や口のうまい人には慎重に。情報をしっかり確認してから。',
-      general:'正直に言うと、今日は少し慎重すぎるくらいがちょうど良いです。'
-    },
-    msg:'賢さとは、見えないものを見る力です。'
-  },
-  {
-    id:15, name:'熊', emoji:'🐻', meaning:'力・保護・財力',
+    themes:{ love:'相手の言葉より行動を見て判断して。', work:'誰かの思惑や駆け引きに気をつけて。', money:'甘い話や口のうまい人には慎重に。', general:'今日は少し慎重すぎるくらいがちょうど良いです。' },
+    pos:{ heart:'心の奥で、何かへの疑念や違和感を感じていませんか？', word:'「なぜ？」と問い続けることが、今日の知恵になります。', action:'表面の情報だけでなく、裏側を確認してから動いて。',
+          hidden:'深層では、鋭い洞察力と本質を見抜く力が育っています。', surface:'今のあなたは、状況を冷静に分析する力を持っています。', potential:'その賢さと洞察力を信じれば、どんな局面も乗り越えられます。' },
+    msg:'賢さとは、見えないものを見る力です。' },
+  { id:15, name:'熊',         emoji:'🐻', meaning:'力・保護・財力',
     base:['強さと安定のエネルギーがあなたを守っています。','頼りになる存在が力を貸してくれる暗示があります。'],
-    themes:{
-      love:'包容力のある愛情が育まれる日。自分がしっかりすることで、相手も安心します。',
-      work:'リーダーシップを発揮したり、誰かをサポートする場面がありそうです。',
-      money:'財力や安定に関して良い動きがある日。貯蓄や資産管理を見直して。',
-      general:'あなたには、思っているよりずっと大きな力があります。自分を信じて。'
-    },
-    msg:'あなたの強さは、誰かの安心になっています。'
-  },
-  {
-    id:16, name:'星', emoji:'⭐', meaning:'希望・導き・夢',
+    themes:{ love:'包容力のある愛情が育まれる日。自分がしっかりすることで相手も安心。', work:'リーダーシップを発揮したり誰かをサポートする場面がありそう。', money:'財力や安定に関して良い動きがある日。貯蓄や資産管理を見直して。', general:'あなたには思っているよりずっと大きな力があります。' },
+    pos:{ heart:'心の奥に、強く守りたいものがあります。', word:'「私が守る」という言葉が、あなたの強さを引き出します。', action:'今日は、誰かのために力を使ってみてください。',
+          hidden:'あなたの深層には、揺るぎない意志と保護する力が眠っています。', surface:'今のあなたは、周りに安心感と信頼を与えています。', potential:'その力と包容力で、大きな豊かさを引き寄せられます。' },
+    msg:'あなたの強さは、誰かの安心になっています。' },
+  { id:16, name:'星',         emoji:'⭐', meaning:'希望・導き・夢',
     base:['希望の光が差し込む、輝かしい日の予感がします。','夢や理想に向かって歩むエネルギーが高まっています。'],
-    themes:{
-      love:'理想の相手や関係に近づいていく兆しがあります。諦めないで。',
-      work:'目標に向けて着実に進んでいます。今日の努力は必ず報われます。',
-      money:'将来の夢に向けた投資や計画を立てるのに良い日です。',
-      general:'あなたの願いは、ちゃんと宇宙に届いています。信じることをやめないで。'
-    },
-    msg:'星は、最も暗い夜に最も明るく輝きます。'
-  },
-  {
-    id:17, name:'コウノトリ', emoji:'🦩', meaning:'変化・移動・新局面',
-    base:['変化の風が吹いています。新しい局面への移行が近いかもしれません。','引越しや転換点を示すカードです。変化を恐れずに。'],
-    themes:{
-      love:'関係に変化が訪れる兆しがあります。その流れに乗ってみましょう。',
-      work:'異動や新しい役割など、環境が変わる予感があります。柔軟に対応して。',
-      money:'収入や支出のパターンが変わりそう。変化を受け入れて整理してみて。',
-      general:'今の状況に留まろうとしなくていい。変化はあなたを、より良い場所へ運びます。'
-    },
-    msg:'変化は、成長の始まりです。'
-  },
-  {
-    id:18, name:'犬', emoji:'🐕', meaning:'友情・信頼・忠誠',
+    themes:{ love:'理想の相手や関係に近づいていく兆しがあります。諦めないで。', work:'目標に向けて着実に進んでいます。今日の努力は必ず報われます。', money:'将来の夢に向けた計画を立てるのに良い日です。', general:'あなたの願いは、宇宙に届いています。信じることをやめないで。' },
+    pos:{ heart:'心の奥に、消えない夢と希望の火が灯っています。', word:'「必ずなれる」という言葉が、今日の星になります。', action:'夢に一歩近づく行動を、今日一つだけしてみて。',
+          hidden:'あなたの深層には、本物の夢と使命感が輝いています。', surface:'今のあなたは、希望の光に導かれて歩んでいます。', potential:'その夢は、あなたが思うよりずっと現実に近いところにあります。' },
+    msg:'星は、最も暗い夜に最も明るく輝きます。' },
+  { id:17, name:'コウノトリ', emoji:'🦩', meaning:'変化・移動・新局面',
+    base:['変化の風が吹いています。新しい局面への移行が近いかもしれません。','引越しや転換点を示すカード。変化を恐れずに。'],
+    themes:{ love:'関係に変化が訪れる兆しがあります。流れに乗ってみて。', work:'異動や新しい役割など環境が変わる予感があります。', money:'収入や支出のパターンが変わりそう。変化を受け入れて。', general:'今の状況に留まろうとしなくていい。変化があなたを運びます。' },
+    pos:{ heart:'心はもう、変化を望んでいます。', word:'「変わっていい」という言葉が、あなたを自由にします。', action:'小さな変化を一つ、今日の生活に取り入れてみて。',
+          hidden:'あなたの深層では、大きな変容のエネルギーが動き始めています。', surface:'今のあなたは、新しいステージへの移行期にいます。', potential:'この変化を受け入れた先に、最高の自分が待っています。' },
+    msg:'変化は、成長の始まりです。' },
+  { id:18, name:'犬',         emoji:'🐕', meaning:'友情・信頼・忠誠',
     base:['信頼できる友人や仲間が、今日の心の支えになります。','誠実に向き合うことが、良い関係を育てます。'],
-    themes:{
-      love:'友情から始まる愛や、信頼ベースの関係に縁がある日。誠実さが一番の魅力です。',
-      work:'チームへの貢献や、誰かへの誠実なサポートが評価されます。',
-      money:'お金よりも信頼を大切にした行動が、後で大きな実りになります。',
-      general:'忠実でいること、誠実でいることが、今日最も大切なことです。'
-    },
-    msg:'信頼は、時間をかけて育てる最高の宝です。'
-  },
-  {
-    id:19, name:'塔', emoji:'🏰', meaning:'孤独・権威・組織',
-    base:['一人で考える時間や、組織・権威との関わりがテーマになりそうです。','距離を置いて物事を見ることで、本質が見えてきます。'],
-    themes:{
-      love:'少し距離を置くことで、本当の気持ちがわかることがあります。孤独も必要な時間です。',
-      work:'組織の中での立場や権限に関して、慎重な対応が必要な日です。',
-      money:'権威ある機関や正規のルートを通じた手続きが安心です。',
-      general:'誰かと比べなくていい。今日はあなた自身の軸に立ち戻る日です。'
-    },
-    msg:'一人でいる時間が、本当の自分を教えてくれます。'
-  },
-  {
-    id:20, name:'庭', emoji:'🌸', meaning:'社会・公共・人との出会い',
+    themes:{ love:'友情から始まる愛や、信頼ベースの関係に縁がある日。', work:'チームへの貢献や誠実なサポートが評価されます。', money:'信頼を大切にした行動が、後で大きな実りになります。', general:'忠実でいること、誠実でいることが今日最も大切なことです。' },
+    pos:{ heart:'心は今、「信じたい」という気持ちに満ちています。', word:'「信じている」という言葉が、関係を深めます。', action:'大切な人に、誠実に向き合う時間を作ってみて。',
+          hidden:'あなたの深層には、揺るぎない誠実さと忠誠心があります。', surface:'今のあなたは、信頼という宝を着実に育てています。', potential:'その誠実さが、一生ものの絆と信頼を引き寄せます。' },
+    msg:'信頼は、時間をかけて育てる最高の宝です。' },
+  { id:19, name:'塔',         emoji:'🏰', meaning:'孤独・権威・組織',
+    base:['一人で考える時間や組織との関わりがテーマになりそうです。','距離を置いて物事を見ることで、本質が見えてきます。'],
+    themes:{ love:'少し距離を置くことで、本当の気持ちがわかることがあります。', work:'組織の中での立場や権限に関して慎重な対応が必要な日です。', money:'権威ある機関や正規のルートを通じた手続きが安心です。', general:'誰かと比べなくていい。今日はあなた自身の軸に戻る日です。' },
+    pos:{ heart:'心は、静かな孤独の中で答えを求めています。', word:'「一人でいい」という言葉が、今日の強さになります。', action:'今日は少し一人の時間を作り、自分と対話してみて。',
+          hidden:'深層では、自分だけの真実と揺るぎない信念を探しています。', surface:'今のあなたは、自分の軸と価値観を再確認しています。', potential:'その自立した精神が、本当の強さと自由をもたらします。' },
+    msg:'一人でいる時間が、本当の自分を教えてくれます。' },
+  { id:20, name:'庭',         emoji:'🌸', meaning:'社会・公共・出会い',
     base:['人との出会いや社会的な場に縁のある日です。','積極的に外に出ることで、良い縁が広がります。'],
-    themes:{
-      love:'社交の場やグループの中で、素敵な出会いがあるかも。笑顔で参加してみて。',
-      work:'ネットワークを広げたり、人前での発表や交流が実を結ぶ日です。',
-      money:'評判や口コミが、収入につながる暗示があります。',
-      general:'今日は一人でいるよりも、人の輪の中に飛び込んでみて。きっと何かが変わります。'
-    },
-    msg:'あなたの存在が、誰かの庭に花を咲かせます。'
-  },
-  {
-    id:21, name:'山', emoji:'⛰️', meaning:'障害・挑戦・停滞',
+    themes:{ love:'社交の場で素敵な出会いがあるかも。笑顔で参加して。', work:'ネットワークを広げたり人前での発表が実を結ぶ日です。', money:'評判や口コミが収入につながる暗示があります。', general:'今日は人の輪の中に飛び込んでみて。何かが変わります。' },
+    pos:{ heart:'心はいま、誰かとつながりたいと思っています。', word:'「一緒に」という言葉が、今日の縁を広げます。', action:'今日は積極的に誰かに声をかけてみてください。',
+          hidden:'あなたの深層には、社会に貢献したいという強い願いがあります。', surface:'今のあなたは、良い縁と人脈を自然に引き寄せています。', potential:'その社交性と開かれた心が、想像以上の出会いをもたらします。' },
+    msg:'あなたの存在が、誰かの庭に花を咲かせます。' },
+  { id:21, name:'山',         emoji:'⛰️', meaning:'障害・挑戦・停滞',
     base:['困難や障害が立ちはだかる日かもしれません。でも、山は必ず越えられます。','焦っても進みにくい時。迂回路を探す知恵が必要です。'],
-    themes:{
-      love:'関係に壁や停滞を感じるかもしれません。今は無理に進めず、待つ選択もあります。',
-      work:'思うように進まない日。でも、この経験が後の糧になります。諦めないで。',
-      money:'出費や損失を防ぐための守りの意識が大切な日です。',
-      general:'正直に言うと、今日は何もかも完璧にしようとしなくていいです。一歩ずつ進んで。'
-    },
-    msg:'山を登れる人は、必ず頂上を知っている人です。'
-  },
-  {
-    id:22, name:'十字路', emoji:'🛤️', meaning:'選択・岐路・方向性',
+    themes:{ love:'関係に壁や停滞を感じるかも。無理に進めず待つ選択も。', work:'思うように進まない日。でもこの経験が後の糧になります。', money:'出費や損失を防ぐための守りの意識が大切な日です。', general:'今日は何もかも完璧にしようとしなくていいです。一歩ずつ。' },
+    pos:{ heart:'心の中にある恐れが、山となって立ちはだかっています。', word:'「それでも進む」という言葉が、山を動かします。', action:'今日は小さな一歩だけでいい。それで十分です。',
+          hidden:'深層では、この障害を乗り越えることへの決意が育っています。', surface:'今のあなたは、試練の只中にいますが、着実に前進しています。', potential:'この山を越えた先に、今まで見えなかった絶景が広がっています。' },
+    msg:'山を登れる人は、必ず頂上を知っている人です。' },
+  { id:22, name:'十字路',     emoji:'🛤️', meaning:'選択・岐路・方向性',
     base:['選択を求められる場面がやってきそうです。','どちらを選んでも正解。大切なのは選んだ後に全力を尽くすことです。'],
-    themes:{
-      love:'関係を進めるか迷っているなら、今日が答えを出すタイミングかもしれません。',
-      work:'複数の選択肢の中から、方向性を決める日。直感を信じてみて。',
-      money:'投資先や使い道で迷っているなら、今日じっくり考えてみましょう。',
-      general:'迷うということは、それだけ可能性がある証拠。どちらの自分も正解です。'
-    },
-    msg:'選ぶ勇気が、あなたの人生を動かします。'
-  },
-  {
-    id:23, name:'ネズミ', emoji:'🐭', meaning:'損失・減少・焦り',
-    base:['じわじわと何かが減ったり、疲弊を感じやすい日かもしれません。','焦りやストレスに注意が必要な時です。','正直に言うと、少し無理をしてきたのではないですか？'],
-    themes:{
-      love:'小さな不満やすれ違いが積み重なっているかもしれません。早めに話し合いを。',
-      work:'疲れがたまっているなら、今日は無理をしないで。消耗を減らす工夫を。',
-      money:'無駄遣いや知らない間の出費に注意。家計を見直してみて。',
-      general:'正直に言うと、今日は「引き算」の日。不要なものを手放すことで、楽になれます。'
-    },
-    msg:'減っていくものを嘆かず、残っているものに感謝を。'
-  },
-  {
-    id:24, name:'ハート', emoji:'❤️', meaning:'愛情・感情・温かさ',
+    themes:{ love:'関係を進めるか迷っているなら、今日が答えを出すタイミング。', work:'複数の選択肢の中から方向性を決める日。直感を信じて。', money:'投資先や使い道で迷っているなら、今日じっくり考えて。', general:'迷うということは、それだけ可能性がある証拠。' },
+    pos:{ heart:'心はすでに、どちらへ進みたいかを知っています。', word:'「選ぶ」という言葉が、今日のあなたを自由にします。', action:'小さな選択から始めて、決断する練習をしてみて。',
+          hidden:'深層では、本当に望む道への確信が静かに育っています。', surface:'今のあなたは、人生の重要な分岐点に立っています。', potential:'この選択が、あなたの最良の人生への第一歩になります。' },
+    msg:'選ぶ勇気が、あなたの人生を動かします。' },
+  { id:23, name:'ネズミ',     emoji:'🐭', meaning:'損失・減少・焦り',
+    base:['じわじわと何かが減ったり、疲弊を感じやすい日かもしれません。','焦りやストレスに注意が必要な時です。少し無理をしてきませんでしたか？'],
+    themes:{ love:'小さな不満やすれ違いが積み重なっているかも。早めに話し合いを。', work:'疲れがたまっているなら今日は無理をしないで。', money:'無駄遣いや知らない間の出費に注意。家計を見直して。', general:'今日は「引き算」の日。不要なものを手放すことで楽になれます。' },
+    pos:{ heart:'心は今、消耗とストレスのサインを出しています。', word:'「休んでいい」という言葉を、自分に許してください。', action:'今日は一つだけ、削れることを削ってみて。',
+          hidden:'深層では、蓄積された疲れと焦りへの気づきが起きています。', surface:'今のあなたには、立ち止まって自分を整える時間が必要です。', potential:'不要なものを手放すことで、本当に大切なものが見えてきます。' },
+    msg:'減っていくものを嘆かず、残っているものに感謝を。' },
+  { id:24, name:'ハート',     emoji:'❤️', meaning:'愛情・感情・温かさ',
     base:['愛情に満ちた温かなエネルギーが流れている日です。','感情を素直に表現することが、今日の開運ポイントです。'],
-    themes:{
-      love:'愛が深まる最高の日。気持ちを素直に伝えてみて。後悔しないために。',
-      work:'人への温かさや思いやりが、仕事の流れを良くします。',
-      money:'喜んでお金を使う場面が、良い循環を生みます。感謝の気持ちを忘れずに。',
-      general:'今日は誰かに優しくしてみて。その温かさはあなた自身に返ってきます。'
-    },
-    msg:'愛を渡した分だけ、心は豊かになっていきます。'
-  },
-  {
-    id:25, name:'指輪', emoji:'💍', meaning:'約束・契約・絆',
+    themes:{ love:'愛が深まる最高の日。気持ちを素直に伝えてみて。', work:'人への温かさや思いやりが仕事の流れを良くします。', money:'喜んでお金を使う場面が良い循環を生みます。', general:'今日は誰かに優しくしてみて。その温かさはあなたに返ってきます。' },
+    pos:{ heart:'心は今、愛情で満たされています。', word:'「好き」という言葉が、今日最強の言葉です。', action:'好きな人や大切な人に、気持ちを伝えてみて。',
+          hidden:'あなたの深層には、深く愛し、愛されることへの強い望みがあります。', surface:'今のあなたは、愛のエネルギーを自然に発しています。', potential:'その愛情の深さが、本物の関係と幸福を引き寄せます。' },
+    msg:'愛を渡した分だけ、心は豊かになっていきます。' },
+  { id:25, name:'指輪',       emoji:'💍', meaning:'約束・契約・絆',
     base:['誰かとの約束や絆が深まる、大切な日です。','契約や取り決めに縁のある日。誠実に向き合って。'],
-    themes:{
-      love:'関係が一段深まる暗示があります。コミットメントや将来の話が出るかもしれません。',
-      work:'契約や合意、約束事に関わる場面がありそう。内容をしっかり確認して。',
-      money:'取引や契約関係のお金の動きに注意して。慎重に、でも前向きに。',
-      general:'誰かと結んだ縁を大切にする日。一度した約束は、最後まで守り通して。'
-    },
-    msg:'結ばれた縁は、時を超えて輝き続けます。'
-  },
-  {
-    id:26, name:'本', emoji:'📚', meaning:'秘密・知識・学び',
-    base:['隠れた真実や、まだ知らない情報が鍵になりそうです。','学ぶことや、知識を深めることに向いている日です。'],
-    themes:{
-      love:'相手についてまだ知らないことがありそう。焦らず、少しずつ理解を深めていって。',
-      work:'知識やスキルを磨くことが、今後の大きな武器になります。今日は学びに投資して。',
-      money:'情報収集が、良い金銭的判断につながります。しっかり調べてから行動を。',
-      general:'今日はゆっくり読書をしたり、内省する時間を作ってみてください。答えはそこにあります。'
-    },
-    msg:'知識は、誰も奪えない、あなただけの宝です。'
-  },
-  {
-    id:27, name:'手紙', emoji:'✉️', meaning:'メッセージ・連絡・情報',
+    themes:{ love:'関係が一段深まる暗示。将来の話が出るかもしれません。', work:'契約や合意、約束事に関わる場面がありそう。内容をしっかり確認して。', money:'取引や契約関係のお金の動きに注意。慎重に、でも前向きに。', general:'誰かと結んだ縁を大切にする日。約束は最後まで守り通して。' },
+    pos:{ heart:'心の奥で、誰かとずっとつながっていたいと思っています。', word:'「約束する」という言葉が、今日の縁を強固にします。', action:'今日は、大切な人との時間や約束を優先してみて。',
+          hidden:'深層では、一生ものの絆への強い願いが息づいています。', surface:'今のあなたは、大切な縁や契約のタイミングを迎えています。', potential:'この絆が、あなたの人生の確かな礎になっていきます。' },
+    msg:'結ばれた縁は、時を超えて輝き続けます。' },
+  { id:26, name:'本',         emoji:'📚', meaning:'秘密・知識・学び',
+    base:['隠れた真実や、まだ知らない情報が鍵になりそうです。','学ぶことや知識を深めることに向いている日です。'],
+    themes:{ love:'相手についてまだ知らないことがありそう。焦らず理解を深めて。', work:'知識やスキルを磨くことが今後の大きな武器になります。', money:'情報収集が良い金銭的判断につながります。', general:'今日はゆっくり読書したり、内省する時間を作ってみて。' },
+    pos:{ heart:'心の奥に、誰にも見せていない本音と物語があります。', word:'「知りたい」という言葉が、今日の扉を開けます。', action:'今日は一つ、新しいことを学んでみてください。',
+          hidden:'あなたの深層には、まだ誰も知らない知恵と洞察が眠っています。', surface:'今のあなたは、知識と理解を深めることで力をつけています。', potential:'その学びへの意欲が、やがて大きな知恵と影響力を生みます。' },
+    msg:'知識は、誰も奪えない、あなただけの宝です。' },
+  { id:27, name:'手紙',       emoji:'✉️', meaning:'メッセージ・連絡・情報',
     base:['大切な連絡や情報が届く暗示があります。','誰かへ気持ちを伝えるのに良い日です。'],
-    themes:{
-      love:'メッセージを送ってみて。あなたの気持ちは、ちゃんと伝わります。',
-      work:'メールや報告書など、文書でのやり取りが重要になる日です。丁寧に。',
-      money:'請求書や通知書など、書類の確認を怠らないようにして。',
-      general:'伝えたいことがあるなら、今日が言葉にする日です。'
-    },
-    msg:'言葉は、心の橋を渡すための翼です。'
-  },
-  {
-    id:28, name:'男性', emoji:'🌊', meaning:'男性的エネルギー・主体性・行動力',
+    themes:{ love:'メッセージを送ってみて。あなたの気持ちはちゃんと伝わります。', work:'メールや書類など文書でのやり取りが重要になる日です。', money:'請求書や通知書など書類の確認を怠らないように。', general:'伝えたいことがあるなら、今日が言葉にする日です。' },
+    pos:{ heart:'心の中に、誰かに伝えたいことがたまっています。', word:'「伝えよう」という決意が、今日の一番大切な言葉です。', action:'今日、伝えられていなかったことを一つ言葉にしてみて。',
+          hidden:'深層では、自分の思いや気持ちをもっと表現したいという願いがあります。', surface:'今のあなたは、言葉を通じて大切なものを伝えるタイミングにいます。', potential:'その言葉が、相手の心を動かし、深いつながりを生みます。' },
+    msg:'言葉は、心の橋を渡すための翼です。' },
+  { id:28, name:'男性',       emoji:'🌊', meaning:'主体性・行動力・決断',
     base:['能動的に動くエネルギーが満ちています。','主体的に動くことで、流れが変わってきます。'],
-    themes:{
-      love:'気になる男性との縁がある日。または、あなた自身がもっと積極的になって。',
-      work:'リーダーシップや実行力が問われる場面がありそう。自信を持って進んで。',
-      money:'行動することで収入につながる日。動かなければ何も変わりません。',
-      general:'迷っているより、まず一歩踏み出して。あなたにはその力があります。'
-    },
-    msg:'動き始めた人にだけ、道は開かれます。'
-  },
-  {
-    id:29, name:'女性', emoji:'🌺', meaning:'女性的エネルギー・受容性・感受性',
+    themes:{ love:'気になる人との縁がある日。あなた自身がもっと積極的になって。', work:'リーダーシップや実行力が問われる場面がありそう。', money:'行動することで収入につながる日。動かなければ何も変わりません。', general:'迷っているより、まず一歩踏み出して。あなたにはその力があります。' },
+    pos:{ heart:'心は「自分で動きたい」と叫んでいます。', word:'「私がやる」という言葉が、今日の流れを変えます。', action:'受け身をやめて、自分から主体的に動いてみて。',
+          hidden:'深層では、もっと主体的に人生を切り拓きたいという強い意志があります。', surface:'今のあなたは、行動する力とリーダーシップを発揮しています。', potential:'その主体性が、あなたの人生を思い通りの形に変えていきます。' },
+    msg:'動き始めた人にだけ、道は開かれます。' },
+  { id:29, name:'女性',       emoji:'🌺', meaning:'受容性・感受性・直感',
     base:['受け取ることと、感じることを大切にする日です。','女性らしい直感や感受性が、今日は特に冴えています。'],
-    themes:{
-      love:'あなたが素のままでいることが、相手を引き寄せます。飾らなくていい。',
-      work:'サポートや細やかな気配りが、高く評価される日です。',
-      money:'受け取ることへの罪悪感を手放して。豊かさはあなたの権利です。',
-      general:'今日は感じるままに動いてみて。あなたの直感は、今日特に正しい。'
-    },
-    msg:'感じることのできる心が、あなたの最大の才能です。'
-  },
-  {
-    id:30, name:'百合', emoji:'⚜️', meaning:'純粋さ・品格・調和',
+    themes:{ love:'素のままでいることが、相手を引き寄せます。飾らなくていい。', work:'サポートや細やかな気配りが高く評価される日です。', money:'受け取ることへの罪悪感を手放して。豊かさはあなたの権利です。', general:'感じるままに動いてみて。あなたの直感は今日特に正しい。' },
+    pos:{ heart:'心は今、誰かの温かさを受け取りたいと思っています。', word:'「受け取っていい」という言葉を、自分に言ってあげて。', action:'今日は、誰かの好意を素直に受け取ってみてください。',
+          hidden:'あなたの深層には、豊かな感受性と深い共感力が満ちています。', surface:'今のあなたは、直感と感受性が研ぎ澄まされています。', potential:'その繊細さと受容力が、深い愛と豊かさを引き寄せます。' },
+    msg:'感じることのできる心が、あなたの最大の才能です。' },
+  { id:30, name:'百合',       emoji:'⚜️', meaning:'純粋さ・品格・調和',
     base:['品位と誠実さが、今日のあなたを輝かせます。','純粋な動機で行動することで、美しい結果が生まれます。'],
-    themes:{
-      love:'清らかな愛情や、品のある関係を大切にする日。焦らなくて大丈夫です。',
-      work:'誠実な仕事ぶりが、信頼と評価につながります。妥協しないで。',
-      money:'清廉に、正しい方法で得たお金には力があります。',
-      general:'あなたの品の良さが、今日の最大の武器です。そのままの自分でいてください。'
-    },
-    msg:'内なる美しさが、あなたの人生を彩ります。'
-  },
-  {
-    id:31, name:'太陽', emoji:'☀️', meaning:'成功・活力・喜び',
+    themes:{ love:'清らかな愛情や品のある関係を大切にする日。', work:'誠実な仕事ぶりが信頼と評価につながります。妥協しないで。', money:'清廉に正しい方法で得たお金には力があります。', general:'あなたの品の良さが、今日の最大の武器です。' },
+    pos:{ heart:'心の奥に、美しさと品格への深い憧れがあります。', word:'「美しく生きる」という言葉が、今日の指針になります。', action:'今日は、自分が「美しい」と思える行動を一つしてみて。',
+          hidden:'あなたの深層には、高い精神性と純粋な心が輝いています。', surface:'今のあなたは、品格と誠実さで周りを引きつけています。', potential:'その内なる美しさが、人生のあらゆる面を豊かにしていきます。' },
+    msg:'内なる美しさが、あなたの人生を彩ります。' },
+  { id:31, name:'太陽',       emoji:'☀️', meaning:'成功・活力・喜び',
     base:['今日は全体的に明るく、エネルギーに満ちた日です。','努力が報われたり、前向きな展開が期待できます。'],
-    themes:{
-      love:'関係に温かな光が差し込む日。喜びを分かち合える時間を大切に。',
-      work:'努力が実を結ぶ日。自信を持って行動すれば、必ず道は開けます。',
-      money:'金運が高まっています。大切なことにお金を使うのに良いタイミング。',
-      general:'今日はどんどん外に出て、光の中に身を置いて。あなたの運気は今、最高潮です。'
-    },
-    msg:'あなたの笑顔は、今日の太陽より明るい。'
-  },
-  {
-    id:32, name:'月', emoji:'🌙', meaning:'直感・感情・夢',
+    themes:{ love:'関係に温かな光が差し込む日。喜びを分かち合える時間を大切に。', work:'努力が実を結ぶ日。自信を持って行動すれば道は開けます。', money:'金運が高まっています。大切なことにお金を使うのに良いタイミング。', general:'今日はどんどん外に出て、光の中に身を置いて。' },
+    pos:{ heart:'心はいま、喜びと活力に溢れています。', word:'「大丈夫、うまくいく」という言葉が今日のお守りです。', action:'今日は思い切って、一番やりたいことをやってみて。',
+          hidden:'あなたの深層には、眩い成功と達成への強い願いが輝いています。', surface:'今のあなたは、運気と自信が最高潮に達しています。', potential:'この光のエネルギーに乗れば、望む未来をすべて手にできます。' },
+    msg:'あなたの笑顔は、今日の太陽より明るい。' },
+  { id:32, name:'月',         emoji:'🌙', meaning:'直感・感情・夢',
     base:['感情や直感が鋭くなっている日です。夢や内なる声に耳を傾けて。','月のエネルギーが満ちています。感情の波に乗りながら、自分を信じて。'],
-    themes:{
-      love:'相手への感情が深まっています。ただ、思い込みにならないよう注意して。',
-      work:'直感的なひらめきが、今日の仕事を助けてくれます。感じたことを大切に。',
-      money:'感情的な判断でのお金の動かし方には注意。冷静な目も忘れずに。',
-      general:'今夜は夢日記をつけてみて。あなたの無意識が、大切なことを教えてくれるかもしれません。'
-    },
-    msg:'月は満ちたり欠けたりするから、美しい。'
-  },
-  {
-    id:33, name:'鍵', emoji:'🗝️', meaning:'解決・答え・達成',
+    themes:{ love:'相手への感情が深まっています。ただ思い込みにならないよう注意して。', work:'直感的なひらめきが今日の仕事を助けてくれます。', money:'感情的な判断でのお金の動かし方には注意。冷静な目も忘れずに。', general:'今夜は夢日記をつけてみて。無意識が大切なことを教えてくれます。' },
+    pos:{ heart:'心の奥に、まだ言葉になっていない深い感情があります。', word:'「感じるままに」という言葉が、今日のあなたを解放します。', action:'今日は直感を信じて、頭より心で動いてみて。',
+          hidden:'あなたの深層には、強力な直感力と霊的な感受性が宿っています。', surface:'今のあなたは、感情と直感が鋭く研ぎ澄まされています。', potential:'その直感を信じれば、論理では到達できない答えが見えてきます。' },
+    msg:'月は満ちたり欠けたりするから、美しい。' },
+  { id:33, name:'鍵',         emoji:'🗝️', meaning:'解決・答え・達成',
     base:['長い間探していた答えや解決策が見つかりそうです。','諦めなかったあなたに、今日は扉が開かれます。'],
-    themes:{
-      love:'関係の悩みに、ついに光が見えてくる日。鍵は意外に身近なところにあります。',
-      work:'行き詰まっていた問題に突破口が見えてきます。あともう少しです。',
-      money:'隠れた収入源や、資産の活かし方が見えてくる日かもしれません。',
-      general:'今日は「どうすれば？」と問い続けてみて。必ず答えのドアが開きます。'
-    },
-    msg:'あなたはもう、鍵を持っています。あとは扉を開けるだけ。'
-  },
-  {
-    id:34, name:'魚', emoji:'🐟', meaning:'豊かさ・流れ・ビジネス',
+    themes:{ love:'関係の悩みに、ついに光が見えてくる日。鍵は身近なところに。', work:'行き詰まっていた問題に突破口が見えてきます。もう少しです。', money:'隠れた収入源や資産の活かし方が見えてくるかもしれません。', general:'「どうすれば？」と問い続けてみて。必ず答えの扉が開きます。' },
+    pos:{ heart:'心はもう、答えに気づいています。あとは認める勇気だけです。', word:'「見つけた」という言葉が、今日の突破口になります。', action:'今日は、解決策を探すことに集中してみてください。',
+          hidden:'あなたの深層には、すでに答えとなる知恵が宿っています。', surface:'今のあなたは、長年の謎や問題の解決に近づいています。', potential:'この鍵を使えば、あなたの可能性の扉が一気に開かれます。' },
+    msg:'あなたはもう、鍵を持っています。あとは扉を開けるだけ。' },
+  { id:34, name:'魚',         emoji:'🐟', meaning:'豊かさ・流れ・ビジネス',
     base:['豊かさのエネルギーが流れている日です。','ビジネスや経済的な活動に追い風が吹いています。'],
-    themes:{
-      love:'豊かで満たされた気持ちが、良い関係を引き寄せます。自分を満たすことから始めて。',
-      work:'ビジネスチャンスや収益に関わる動きがある日。積極的に動いて。',
-      money:'今日の金運は高め。投資や事業の決断に向いています。流れに乗って。',
-      general:'豊かさを受け取る許可を自分に出してみて。あなたはそれだけの価値があります。'
-    },
-    msg:'豊かさは、受け取る準備ができた人のところへ流れ込みます。'
-  },
-  {
-    id:35, name:'錨', emoji:'⚓', meaning:'安定・忍耐・基盤',
+    themes:{ love:'豊かで満たされた気持ちが良い関係を引き寄せます。', work:'ビジネスチャンスや収益に関わる動きがある日。積極的に動いて。', money:'今日の金運は高め。投資や事業の決断に向いています。', general:'豊かさを受け取る許可を自分に出してみて。' },
+    pos:{ heart:'心の奥に、豊かさへの渇望と期待が満ちています。', word:'「受け取っていい」という言葉が、豊かさの流れを開きます。', action:'今日は、豊かさに関する具体的な行動を一つしてみて。',
+          hidden:'あなたの深層には、豊かさを引き寄せる強い磁力があります。', surface:'今のあなたには、ビジネスと豊かさの追い風が吹いています。', potential:'流れに乗ることで、想像以上の豊かさが手に入ります。' },
+    msg:'豊かさは、受け取る準備ができた人のところへ流れ込みます。' },
+  { id:35, name:'錨',         emoji:'⚓', meaning:'安定・忍耐・基盤',
     base:['安定を大切にすることが、今日のテーマです。','じっくりと根を下ろすことで、揺れない自分ができていきます。'],
-    themes:{
-      love:'安心できる関係を育てることが大切な日。派手さよりも、誠実さを選んで。',
-      work:'安定した基盤作りや、長期的な取り組みに集中する時です。',
-      money:'固定費の見直しや、将来に向けた貯蓄を始めるのに良い日です。',
-      general:'今日は「待つ」ことも大切な選択です。焦らず、しっかりとした土台を築いて。'
-    },
-    msg:'深く根を張った人ほど、嵐に揺れなくなります。'
-  },
-  {
-    id:36, name:'十字架', emoji:'✝️', meaning:'試練・宿命・信念',
+    themes:{ love:'安心できる関係を育てることが大切な日。誠実さを選んで。', work:'安定した基盤作りや長期的な取り組みに集中する時です。', money:'固定費の見直しや将来に向けた貯蓄を始めるのに良い日です。', general:'「待つ」ことも大切な選択です。焦らず土台を築いて。' },
+    pos:{ heart:'心は今、安定と確かな基盤を求めています。', word:'「ここが私の場所」という言葉が、今日の力になります。', action:'今日は基盤を整えることに、時間とエネルギーを使ってみて。',
+          hidden:'あなたの深層には、揺るぎない安定と永続への深い願いがあります。', surface:'今のあなたは、しっかりとした基盤を着実に築いています。', potential:'この安定した土台の上に、やがて大きな繁栄が実ります。' },
+    msg:'深く根を張った人ほど、嵐に揺れなくなります。' },
+  { id:36, name:'十字架',     emoji:'✝️', meaning:'試練・宿命・信念',
     base:['今日は重さや責任感を感じる日かもしれません。でも、この試練には意味があります。','宿命的な何かを感じる日。それはあなたが成長するために必要な道のりです。'],
-    themes:{
-      love:'簡単ではない関係や状況かもしれません。でも、乗り越えた先に深い愛があります。',
-      work:'重い責任や困難な課題がある日。でも、あなたが選ばれた理由があります。',
-      money:'苦しい時期があっても、それは永遠には続きません。節約と知恵で乗り越えて。',
-      general:'正直に言うと、今日は逃げたい気持ちになるかもしれません。でも、ここが踏ん張りどころです。'
-    },
-    msg:'あなたが背負っているものは、あなたにしか背負えないものです。'
-  },
+    themes:{ love:'簡単ではない関係かもしれません。でも乗り越えた先に深い愛があります。', work:'重い責任や困難な課題がある日。でも、あなたが選ばれた理由があります。', money:'苦しい時期があっても、それは永遠には続きません。節約と知恵で。', general:'逃げたい気持ちになるかもしれません。でも、ここが踏ん張りどころです。' },
+    pos:{ heart:'心の奥に、使命感と覚悟の炎が灯っています。', word:'「これが私の道」という言葉が、今日の重さを力に変えます。', action:'今日は、避けてきた大切なことに、真剣に向き合ってみて。',
+          hidden:'あなたの深層には、この試練を乗り越えるための強さと信念があります。', surface:'今のあなたは、重要な試練の中で本当の自分を見出しています。', potential:'この苦しみを超えた先に、あなただけの輝かしい使命が待っています。' },
+    msg:'あなたが背負っているものは、あなたにしか背負えないものです。' },
 ];
 
-function getSunSign(dateStr) {
-  const d = new Date(dateStr), m = d.getMonth()+1, day = d.getDate(), md = m*100+day;
-  if (md>=1222||md<=119) return '山羊座';
-  if (md<=218) return '水瓶座';
-  if (md<=320) return '魚座';
-  if (md<=419) return '牡羊座';
-  if (md<=520) return '牡牛座';
-  if (md<=621) return '双子座';
-  if (md<=722) return '蟹座';
-  if (md<=822) return '獅子座';
-  if (md<=922) return '乙女座';
-  if (md<=1023) return '天秤座';
-  if (md<=1121) return '蠍座';
-  return '射手座';
-}
-
-function pick(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
-
-const MAX_USES = 2;
+const THEME_LABELS = { love:'恋愛・人間関係', work:'仕事・キャリア', money:'金運・お金', general:'総合運' };
 
 function getUsageData() {
   const today = new Date().toLocaleDateString('ja-JP');
   const raw = localStorage.getItem('fortune_usage');
   if (!raw) return { date: today, count: 0 };
   const data = JSON.parse(raw);
-  if (data.date !== today) return { date: today, count: 0 };
-  return data;
+  return data.date !== today ? { date: today, count: 0 } : data;
 }
 
 function saveUsage(count) {
@@ -686,9 +474,8 @@ function saveUsage(count) {
   localStorage.setItem('fortune_usage', JSON.stringify({ date: today, count }));
 }
 
-function updateRemainingDisplay(count) {
-  const left = Math.max(0, MAX_USES - count);
-  document.getElementById('remaining-count').textContent = left + '回';
+function updateRemaining(count) {
+  document.getElementById('remaining-count').textContent = Math.max(0, MAX_USES - count) + '回';
 }
 
 function initApp() {
@@ -697,12 +484,11 @@ function initApp() {
     document.getElementById('step-locked').classList.remove('hidden');
     document.getElementById('step-setup').classList.add('hidden');
   } else {
-    updateRemainingDisplay(usage.count);
+    updateRemaining(usage.count);
   }
 }
 
 let selectedTheme = '';
-
 document.querySelectorAll('.theme-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
@@ -711,50 +497,75 @@ document.querySelectorAll('.theme-btn').forEach(btn => {
   });
 });
 
-function showError(msg) {
-  const el = document.getElementById('error-msg');
-  el.textContent = msg;
-  el.classList.remove('hidden');
+function buildCard(card, posKey) {
+  return `<div class="spread-item">
+    <div class="s-card">
+      <span class="s-card-num">${card.id}</span>
+      <div class="s-card-line top"></div>
+      <span class="s-card-emoji">${card.emoji}</span>
+      <span class="s-card-name">${card.name}</span>
+      <div class="s-card-line bottom"></div>
+    </div>
+    <span class="spread-pos">${posKey}</span>
+    <span class="spread-label">${card.meaning}</span>
+  </div>`;
 }
 
-function drawCard() {
+function drawCards() {
   const usage = getUsageData();
   if (usage.count >= MAX_USES) {
     document.getElementById('step-setup').classList.add('hidden');
     document.getElementById('step-locked').classList.remove('hidden');
     return;
   }
-
   const birthdate = document.getElementById('birthdate').value;
-  if (!birthdate) return showError('生年月日を選択してください');
-  if (!selectedTheme) return showError('鑑定テーマを選んでください');
+  if (!birthdate) { document.getElementById('error-msg').textContent='生年月日を選択してください'; document.getElementById('error-msg').classList.remove('hidden'); return; }
+  if (!selectedTheme) { document.getElementById('error-msg').textContent='鑑定テーマを選んでください'; document.getElementById('error-msg').classList.remove('hidden'); return; }
   document.getElementById('error-msg').classList.add('hidden');
 
   const newCount = usage.count + 1;
   saveUsage(newCount);
-  updateRemainingDisplay(newCount);
+  updateRemaining(newCount);
 
-  const card = CARDS[Math.floor(Math.random() * CARDS.length)];
+  const shuffled = [...CARDS].sort(() => Math.random() - 0.5);
+  const [c1, c2, c3] = shuffled.slice(0, 3);
+  const [c4, c5, c6] = shuffled.slice(3, 6);
   const signName = getSunSign(birthdate);
   const sign = SIGNS[signName];
+  const theme = selectedTheme;
 
-  document.getElementById('r-num').textContent = card.id;
-  document.getElementById('r-num2').textContent = card.id;
-  document.getElementById('r-emoji').textContent = card.emoji;
-  document.getElementById('r-name').textContent = card.name;
-  document.getElementById('r-meaning').textContent = card.meaning;
-  document.getElementById('r-sign').textContent = signName + ' ' + sign.sym;
+  // Spread 1カード表示
+  document.getElementById('spread1-cards').innerHTML =
+    buildCard(c1, '心') + buildCard(c2, '言葉') + buildCard(c3, '行動');
 
-  const body = sign.intro + '\n\n' + pick(card.base) + '\n\n' + card.themes[selectedTheme] + '\n\n' + sign.q;
-  document.getElementById('r-body').textContent = body;
-  document.getElementById('r-today').textContent = '✨ ' + card.msg + ' ✨';
+  // Spread 1鑑定文
+  const s1reading = `${sign.intro}\n\n` +
+    `◇ 心 — ${c1.name}\n${c1.pos.heart} ${c1.themes[theme]}\n\n` +
+    `◇ 言葉 — ${c2.name}\n${c2.pos.word} ${c2.themes[theme]}\n\n` +
+    `◇ 行動 — ${c3.name}\n${c3.pos.action}\n\n` +
+    `${sign.q}\n\n✨ ${pick([c1, c2, c3]).msg} ✨`;
 
-  if (newCount >= MAX_USES) {
-    document.getElementById('r-body').textContent += '\n\n— 本日の無料鑑定はこれで最後です。続きはLINEでどうぞ。';
-  }
+  document.getElementById('spread1-reading').innerHTML =
+    `<p class="reading-text">${escHtml(s1reading)}</p>`;
+
+  // Spread 2カード表示
+  document.getElementById('spread2-cards').innerHTML =
+    buildCard(c4, '潜在') + buildCard(c5, '顕在') + buildCard(c6, '可能性');
+
+  // Spread 2ぼかし鑑定文（teaser）
+  const s2text =
+    `◇ 潜在 — ${c4.name}\n${c4.pos.hidden}\n\n` +
+    `◇ 顕在 — ${c5.name}\n${c5.pos.surface}\n\n` +
+    `◇ 可能性 — ${c6.name}\n${c6.pos.potential}\n\n` +
+    `あなたの深層には、まだ言葉になっていない大きな物語が眠っています。\nこの3枚が示す本当の意味と、あなたが開く可能性の全貌は…`;
+  document.getElementById('spread2-reading').textContent = s2text;
 
   document.getElementById('step-setup').classList.add('hidden');
   document.getElementById('step-result').classList.remove('hidden');
+  if (newCount >= MAX_USES) {
+    document.getElementById('spread1-reading').innerHTML +=
+      '<p style="font-size:0.88rem;color:var(--text-muted);margin-top:1rem;font-style:italic;">— 本日の無料鑑定はこれが最後です。また明日お越しください。</p>';
+  }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -768,9 +579,13 @@ function resetApp() {
   }
   selectedTheme = '';
   document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('step-setup').classList.remove('hidden');
   document.getElementById('step-result').classList.add('hidden');
+  document.getElementById('step-setup').classList.remove('hidden');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
 }
 
 initApp();
