@@ -127,6 +127,17 @@
     }
     .hidden { display: none; }
     .theme-label { color: var(--lavender); font-size: 0.88rem; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .remaining-badge {
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 8px; padding: 0.5rem 0.9rem; margin-bottom: 1.2rem;
+      font-size: 0.88rem;
+    }
+    .remaining-count { color: var(--gold); font-family: 'Cinzel', serif; font-size: 1rem; }
+    .locked-panel { text-align: center; padding: 2rem 1rem; }
+    .locked-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .locked-title { font-family: 'Cinzel', serif; color: var(--gold); font-size: 1.2rem; letter-spacing: 0.1em; margin-bottom: 0.8rem; }
+    .locked-text { color: var(--lavender); line-height: 1.9; margin-bottom: 1.5rem; font-size: 0.95rem; }
   </style>
 </head>
 <body>
@@ -135,9 +146,32 @@
   <p class="subtitle">星とカードが、あなたの今日を照らします</p>
   <div class="stars">⋆ ✦ ⋆ ✦ ⋆</div>
 
+  <!-- ロック画面 -->
+  <div id="step-locked" class="hidden">
+    <div class="panel">
+      <div class="locked-panel">
+        <div class="locked-icon">🔮</div>
+        <p class="locked-title">本日の無料鑑定は終了しました</p>
+        <p class="locked-text">
+          一日3回の無料鑑定をお使いいただきありがとうございます。<br>
+          続きはLINEで詳細鑑定をお受けください。<br>
+          明日またお越しいただければ、新しい鑑定が始まります。
+        </p>
+        <div class="cta-grid">
+          <a href="https://line.me/ti/p/hbdPzf6CJp" class="cta-btn cta-line" target="_blank" rel="noopener">📱 LINEで詳細鑑定</a>
+          <a href="https://note.com/sumina_kiko" class="cta-btn cta-note" target="_blank" rel="noopener">📖 noteで記事を読む</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="step-setup">
     <div class="panel">
       <p class="panel-title">鑑定の準備</p>
+      <div class="remaining-badge">
+        <span style="color:var(--text-muted);">本日の残り無料鑑定</span>
+        <span class="remaining-count" id="remaining-count">3回</span>
+      </div>
       <label for="birthdate">生年月日</label>
       <input type="date" id="birthdate" max="2010-12-31" />
       <p class="theme-label">鑑定テーマを選んでください</p>
@@ -639,6 +673,37 @@ function getSunSign(dateStr) {
 
 function pick(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
 
+const MAX_USES = 2;
+
+function getUsageData() {
+  const today = new Date().toLocaleDateString('ja-JP');
+  const raw = localStorage.getItem('fortune_usage');
+  if (!raw) return { date: today, count: 0 };
+  const data = JSON.parse(raw);
+  if (data.date !== today) return { date: today, count: 0 };
+  return data;
+}
+
+function saveUsage(count) {
+  const today = new Date().toLocaleDateString('ja-JP');
+  localStorage.setItem('fortune_usage', JSON.stringify({ date: today, count }));
+}
+
+function updateRemainingDisplay(count) {
+  const left = Math.max(0, MAX_USES - count);
+  document.getElementById('remaining-count').textContent = left + '回';
+}
+
+function initApp() {
+  const usage = getUsageData();
+  if (usage.count >= MAX_USES) {
+    document.getElementById('step-locked').classList.remove('hidden');
+    document.getElementById('step-setup').classList.add('hidden');
+  } else {
+    updateRemainingDisplay(usage.count);
+  }
+}
+
 let selectedTheme = '';
 
 document.querySelectorAll('.theme-btn').forEach(btn => {
@@ -656,10 +721,21 @@ function showError(msg) {
 }
 
 function drawCard() {
+  const usage = getUsageData();
+  if (usage.count >= MAX_USES) {
+    document.getElementById('step-setup').classList.add('hidden');
+    document.getElementById('step-locked').classList.remove('hidden');
+    return;
+  }
+
   const birthdate = document.getElementById('birthdate').value;
   if (!birthdate) return showError('生年月日を選択してください');
   if (!selectedTheme) return showError('鑑定テーマを選んでください');
   document.getElementById('error-msg').classList.add('hidden');
+
+  const newCount = usage.count + 1;
+  saveUsage(newCount);
+  updateRemainingDisplay(newCount);
 
   const card = CARDS[Math.floor(Math.random() * CARDS.length)];
   const signName = getSunSign(birthdate);
@@ -676,18 +752,31 @@ function drawCard() {
   document.getElementById('r-body').textContent = body;
   document.getElementById('r-today').textContent = '✨ ' + card.msg + ' ✨';
 
+  if (newCount >= MAX_USES) {
+    document.getElementById('r-body').textContent += '\n\n— 本日の無料鑑定はこれで最後です。続きはLINEでどうぞ。';
+  }
+
   document.getElementById('step-setup').classList.add('hidden');
   document.getElementById('step-result').classList.remove('hidden');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function resetApp() {
+  const usage = getUsageData();
+  if (usage.count >= MAX_USES) {
+    document.getElementById('step-result').classList.add('hidden');
+    document.getElementById('step-locked').classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
   selectedTheme = '';
   document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('step-setup').classList.remove('hidden');
   document.getElementById('step-result').classList.add('hidden');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+initApp();
 </script>
 </body>
 </html>
