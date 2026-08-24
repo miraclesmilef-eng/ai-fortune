@@ -1,0 +1,826 @@
+<title>どうぶつ図鑑診断</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yomogi&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap">
+<style>
+  :root {
+    --ground: #EEF5EC;
+    --surface: #FFFEFA;
+    --surface-2: #FFF6E8;
+    --ink: #2B3A2F;
+    --ink-soft: #5B6B5C;
+    --accent: #FF7A59;
+    --accent-ink: #7A2E17;
+    --accent-2: #F6C445;
+    --accent-3: #6E9B7C;
+    --line: #D8E6D5;
+    --shadow: rgba(43,58,47,0.14);
+    --fur-coral: #FFB199;
+    --fur-butter: #F6D98A;
+    --fur-sage: #A9C9A8;
+    --fur-sand: #E3C9A0;
+    --fur-cream: #FBEFE4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #141A16;
+      --surface: #1E2620;
+      --surface-2: #26301F;
+      --ink: #F1EFE6;
+      --ink-soft: #B7C2B6;
+      --accent: #FF8A6B;
+      --accent-ink: #FFE3D8;
+      --accent-2: #E8BE55;
+      --accent-3: #8BB99A;
+      --line: #354237;
+      --shadow: rgba(0,0,0,0.45);
+      --fur-coral: #C97A61;
+      --fur-butter: #C9A857;
+      --fur-sage: #6E9179;
+      --fur-sand: #A9895F;
+      --fur-cream: #3A342A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #141A16;
+    --surface: #1E2620;
+    --surface-2: #26301F;
+    --ink: #F1EFE6;
+    --ink-soft: #B7C2B6;
+    --accent: #FF8A6B;
+    --accent-ink: #FFE3D8;
+    --accent-2: #E8BE55;
+    --accent-3: #8BB99A;
+    --line: #354237;
+    --shadow: rgba(0,0,0,0.45);
+    --fur-coral: #C97A61;
+    --fur-butter: #C9A857;
+    --fur-sage: #6E9179;
+    --fur-sand: #A9895F;
+    --fur-cream: #3A342A;
+  }
+
+  * { box-sizing: border-box; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Hiragino Sans", sans-serif;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(10px, 3vw, 24px);
+  }
+
+  .stage {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(10px, 2dvh, 16px);
+  }
+
+  .eyebrow {
+    font-size: clamp(11px, 2.6vw, 12px);
+    letter-spacing: 0.14em;
+    color: var(--accent-3);
+    font-weight: 700;
+  }
+
+  h1.title {
+    font-family: "Yomogi", "Zen Maru Gothic", sans-serif;
+    font-size: clamp(22px, 6.5vw, 30px);
+    margin: 0;
+    text-align: center;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+
+  .subtitle {
+    margin: 0;
+    font-size: clamp(12px, 3vw, 13px);
+    color: var(--ink-soft);
+    text-align: center;
+  }
+
+  /* ---------- Quiz ---------- */
+  .quiz-card {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    box-shadow: 0 10px 26px -14px var(--shadow);
+    padding: clamp(12px, 3.2vw, 18px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(8px, 1.8vw, 12px);
+  }
+
+  .question h2 {
+    font-family: "Yomogi", "Zen Maru Gothic", sans-serif;
+    font-size: clamp(13px, 3.4vw, 15px);
+    margin: 0 0 6px;
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  .choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .choice {
+    appearance: none;
+    border: 1.5px solid var(--line);
+    background: var(--surface-2);
+    color: var(--ink);
+    border-radius: 12px;
+    padding: 7px 7px;
+    font-family: inherit;
+    font-size: clamp(10.5px, 2.6vw, 11.5px);
+    line-height: 1.25;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  }
+  .choice:hover { border-color: var(--accent-3); }
+  .choice:active { transform: scale(0.96); }
+  .choice.selected {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .submit-btn {
+    appearance: none;
+    border: none;
+    border-radius: 999px;
+    padding: 11px;
+    font-family: "Yomogi", sans-serif;
+    font-size: clamp(14px, 3.6vw, 16px);
+    background: var(--accent-2);
+    color: var(--accent-ink);
+    cursor: pointer;
+    box-shadow: 0 8px 18px -8px var(--shadow);
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .submit-btn:not(:disabled):active { transform: scale(0.97); }
+
+  /* ---------- Result ---------- */
+  .result-wrap { width: 100%; display: none; flex-direction: column; align-items: center; gap: 12px; }
+  .result-wrap.active { display: flex; }
+  .quiz-wrap.hidden { display: none; }
+
+  .card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: var(--surface);
+    border-radius: 26px;
+    border: 1px solid var(--line);
+    box-shadow: 0 16px 34px -16px var(--shadow);
+    padding: clamp(14px, 4.2vw, 20px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(6px, 1.4dvh, 10px);
+    overflow: hidden;
+    animation: cardIn 0.5s cubic-bezier(.2,.9,.3,1.2) both;
+  }
+  @keyframes cardIn { from { opacity: 0; transform: translateY(10px) scale(0.97); } to { opacity: 1; transform: none; } }
+
+  /* ticket notches */
+  .card::before, .card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 22px;
+    height: 22px;
+    background: var(--ground);
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+  .card::before { left: -11px; }
+  .card::after { right: -11px; }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .catalog {
+    font-weight: 700;
+    font-size: clamp(11px, 2.8vw, 12px);
+    background: var(--accent-2);
+    color: var(--accent-ink);
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.06em;
+  }
+
+  .owner-badge {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    border: 1.5px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .owner-badge svg { width: 18px; height: 18px; }
+
+  .art-frame {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .art-circle {
+    width: min(46dvh, 62%);
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background: var(--surface-2);
+    border: 3px dashed var(--line);
+    display: flex; align-items: center; justify-content: center;
+    padding: 10%;
+  }
+  .art-circle svg { width: 100%; height: 100%; }
+  .art-circle.no-art { flex-direction: column; gap: 4px; }
+  .art-circle.no-art .catalog-big {
+    font-family: "Yomogi", sans-serif;
+    font-size: clamp(28px, 9vw, 40px);
+    color: var(--accent-3);
+  }
+  .art-circle.no-art .paw-row { font-size: 14px; letter-spacing: 4px; color: var(--accent-2); }
+  .art-circle.no-art .of-total { font-size: clamp(9px, 2.2vw, 10px); color: var(--ink-soft); }
+
+  .name-block { text-align: center; }
+  .name-block .type-name {
+    font-family: "Yomogi", sans-serif;
+    font-size: clamp(19px, 5.6vw, 24px);
+    margin: 0;
+    text-wrap: balance;
+  }
+  .name-block .catch {
+    margin: 2px 0 0;
+    font-size: clamp(11.5px, 2.9vw, 12.5px);
+    color: var(--accent-3);
+    font-weight: 700;
+  }
+
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: clamp(10px, 3vw, 18px);
+  }
+  .stat { text-align: center; }
+  .stat .label { font-size: clamp(9.5px, 2.4vw, 10.5px); color: var(--ink-soft); display: block; margin-bottom: 2px; }
+  .dots { display: inline-flex; gap: 2px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
+  .dot.on { background: var(--accent); }
+
+  .desc {
+    margin: 0;
+    text-align: center;
+    font-size: clamp(11px, 2.8vw, 12.5px);
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  .divider {
+    border: none;
+    border-top: 2px dashed var(--line);
+    margin: 0;
+  }
+
+  .tags {
+    margin: 0;
+    text-align: center;
+    font-size: clamp(10.5px, 2.6vw, 11.5px);
+    color: var(--accent-3);
+    font-weight: 700;
+  }
+
+  .controls {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .gender-toggle {
+    display: inline-flex;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .gender-toggle button {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--ink-soft);
+    font-family: inherit;
+    font-size: clamp(11px, 2.7vw, 12px);
+    padding: 6px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .gender-toggle button.active { background: var(--accent); color: #fff; font-weight: 700; }
+
+  .switch-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: clamp(11px, 2.7vw, 12px);
+    color: var(--ink-soft);
+  }
+  .switch {
+    width: 34px; height: 20px;
+    border-radius: 999px;
+    background: var(--line);
+    position: relative;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+  }
+  .switch::after {
+    content: "";
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--surface);
+    transition: transform 0.18s ease;
+  }
+  .switch.on { background: var(--accent-3); }
+  .switch.on::after { transform: translateX(14px); }
+
+  .retry-btn {
+    appearance: none;
+    border: 1.5px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 9px 16px;
+    font-family: "Yomogi", sans-serif;
+    font-size: clamp(13px, 3.4vw, 14px);
+    cursor: pointer;
+    width: 100%;
+  }
+  .retry-btn:hover { border-color: var(--accent); }
+</style>
+
+<div class="stage">
+  <span class="eyebrow">PET COMPATIBILITY FILE</span>
+  <h1 class="title">どうぶつ図鑑診断</h1>
+  <p class="subtitle">3つの質問で、あなたが飼うべき相棒を診断します</p>
+
+  <div class="quiz-wrap" id="quizWrap">
+    <div class="quiz-card">
+      <div class="question" id="q1">
+        <h2>Q1. 理想の休日は?</h2>
+        <div class="choices" data-q="1">
+          <button class="choice" data-v="a">家でひとり、静かに過ごす</button>
+          <button class="choice" data-v="b">友達とわいわい過ごす</button>
+          <button class="choice" data-v="c">予定を詰めず気分で動く</button>
+          <button class="choice" data-v="d">やることを片付けてスッキリ</button>
+        </div>
+      </div>
+      <div class="question" id="q2">
+        <h2>Q2. 人との距離感は?</h2>
+        <div class="choices" data-q="2">
+          <button class="choice" data-v="a">べったり甘えたい・甘えられたい</button>
+          <button class="choice" data-v="b">一定の距離を保ちつつ仲良く</button>
+          <button class="choice" data-v="c">気が向いた時だけ交流したい</button>
+          <button class="choice" data-v="d">輪の中心よりも観察するのが好き</button>
+        </div>
+      </div>
+      <div class="question" id="q3">
+        <h2>Q3. お世話にかけられる手間は?</h2>
+        <div class="choices" data-q="3">
+          <button class="choice" data-v="a">こまめなお世話はちょっと苦手</button>
+          <button class="choice" data-v="b">基本のお世話なら無理なくできる</button>
+          <button class="choice" data-v="c">手をかけるほど愛着が湧くタイプ</button>
+          <button class="choice" data-v="d">本格的にじっくり向き合いたい</button>
+        </div>
+      </div>
+      <button class="submit-btn" id="submitBtn" disabled>診断する</button>
+    </div>
+  </div>
+
+  <div class="result-wrap" id="resultWrap">
+    <div class="card" id="card">
+      <div class="card-top">
+        <span class="catalog" id="catalogNo">No.01 / 16</span>
+        <span class="owner-badge" id="ownerBadge"></span>
+      </div>
+      <div class="art-frame">
+        <div class="art-circle" id="artCircle"></div>
+      </div>
+      <div class="name-block">
+        <p class="type-name" id="typeName">マイペース猫さん</p>
+        <p class="catch" id="typeCatch">距離感の達人</p>
+      </div>
+      <div class="stats" id="stats"></div>
+      <hr class="divider">
+      <p class="desc" id="typeDesc"></p>
+      <p class="tags">#どうぶつ図鑑診断 #あなたが飼うべき動物</p>
+    </div>
+
+    <div class="controls">
+      <div class="gender-toggle" id="genderToggle">
+        <button data-g="male">男性</button>
+        <button data-g="female">女性</button>
+        <button data-g="neutral" class="active">中性的</button>
+      </div>
+      <div class="switch-row">
+        <span>イラスト</span>
+        <button class="switch on" id="artSwitch"></button>
+      </div>
+    </div>
+    <button class="retry-btn" id="retryBtn">もう一度診断する</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  const svgHead = (inner) => `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;
+  const ink = "var(--ink)";
+
+  const ANIMALS = [
+    {
+      key: "cat", name: "マイペース猫さん", catch: "距離感の達人、そっと寄り添うタイプ",
+      desc: "ひとりの時間も一緒の時間も、自分のペースで決めたいあなたに。気が向いた時だけの愛情表現が心地いい関係を築けます。",
+      stats: { affection: 3, freedom: 5, care: 4 }, fur: "var(--fur-coral)",
+      svg: svgHead(`
+        <polygon points="55,55 92,95 40,100" fill="${ink}"/>
+        <polygon points="145,55 108,95 160,100" fill="${ink}"/>
+        <polygon points="62,68 85,92 55,92" fill="var(--fur-cream)"/>
+        <polygon points="138,68 115,92 145,92" fill="var(--fur-cream)"/>
+        <circle cx="100" cy="112" r="62" fill="var(--fur-coral)"/>
+        <ellipse cx="76" cy="150" rx="8" ry="6" fill="#ffffff" opacity="0.55"/>
+        <ellipse cx="124" cy="150" rx="8" ry="6" fill="#ffffff" opacity="0.55"/>
+        <path d="M72,108 q10,-14 20,0" stroke="${ink}" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M108,108 q10,-14 20,0" stroke="${ink}" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <polygon points="94,122 106,122 100,132" fill="${ink}"/>
+        <path d="M100,132 q-8,8 -16,3 M100,132 q8,8 16,3" stroke="${ink}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <g stroke="${ink}" stroke-width="2.5" stroke-linecap="round">
+          <line x1="30" y1="118" x2="58" y2="122"/><line x1="30" y1="130" x2="58" y2="130"/>
+          <line x1="170" y1="118" x2="142" y2="122"/><line x1="170" y1="130" x2="142" y2="130"/>
+        </g>
+      `)
+    },
+    {
+      key: "dog", name: "全力ラブの犬さん", catch: "愛情表現に手加減なしのムードメーカー",
+      desc: "うれしいこともつらいことも隠さず伝え合いたい、まっすぐな関係が向いています。全力で懐かれる幸せを知っています。",
+      stats: { affection: 5, freedom: 1, care: 2 }, fur: "var(--fur-sand)",
+      svg: svgHead(`
+        <ellipse cx="48" cy="115" rx="22" ry="34" fill="var(--fur-sand)" transform="rotate(-18 48 115)"/>
+        <ellipse cx="152" cy="115" rx="22" ry="34" fill="var(--fur-sand)" transform="rotate(18 152 115)"/>
+        <circle cx="100" cy="112" r="60" fill="var(--fur-sand)"/>
+        <circle cx="76" cy="108" r="9" fill="${ink}"/><circle cx="79" cy="105" r="2.5" fill="#fff"/>
+        <circle cx="124" cy="108" r="9" fill="${ink}"/><circle cx="127" cy="105" r="2.5" fill="#fff"/>
+        <ellipse cx="100" cy="132" rx="12" ry="9" fill="${ink}"/>
+        <path d="M100,140 q0,10 -10,14" stroke="${ink}" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <ellipse cx="94" cy="158" rx="10" ry="7" fill="#FF9A8C"/>
+        <ellipse cx="70" cy="150" rx="7" ry="5" fill="#ffffff" opacity="0.5"/>
+        <ellipse cx="130" cy="150" rx="7" ry="5" fill="#ffffff" opacity="0.5"/>
+      `)
+    },
+    {
+      key: "rabbit", name: "しずかなうさぎさん", catch: "静けさの中で心を通わせるタイプ",
+      desc: "騒がしい社交より、落ち着いた空間でじっくり信頼を築くのが得意。心を開くまでは少し時間がかかります。",
+      stats: { affection: 4, freedom: 3, care: 3 }, fur: "var(--fur-cream)",
+      svg: svgHead(`
+        <rect x="68" y="18" width="20" height="80" rx="10" fill="var(--fur-cream)" transform="rotate(-8 78 58)"/>
+        <rect x="112" y="18" width="20" height="80" rx="10" fill="var(--fur-cream)" transform="rotate(8 122 58)"/>
+        <rect x="73" y="26" width="10" height="60" rx="5" fill="#FFC9BE" transform="rotate(-8 78 58)"/>
+        <rect x="117" y="26" width="10" height="60" rx="5" fill="#FFC9BE" transform="rotate(8 122 58)"/>
+        <circle cx="100" cy="118" r="58" fill="var(--fur-cream)"/>
+        <circle cx="80" cy="115" r="6" fill="${ink}"/>
+        <circle cx="120" cy="115" r="6" fill="${ink}"/>
+        <polygon points="94,130 106,130 100,138" fill="#FFC9BE"/>
+        <path d="M100,138 q-6,6 -13,2 M100,138 q6,6 13,2" stroke="${ink}" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <ellipse cx="72" cy="150" rx="7" ry="5" fill="#FFC9BE" opacity="0.7"/>
+        <ellipse cx="128" cy="150" rx="7" ry="5" fill="#FFC9BE" opacity="0.7"/>
+      `)
+    },
+    {
+      key: "hamster", name: "がんばりやハムスター", catch: "頬袋にコツコツ努力を詰め込む系",
+      desc: "地道な積み重ねが得意な働き者タイプ。小さな安心をひとつずつ集めていく暮らしが向いています。",
+      stats: { affection: 2, freedom: 2, care: 5 }, fur: "var(--fur-butter)",
+      svg: svgHead(`
+        <circle cx="58" cy="70" r="14" fill="var(--fur-butter)"/>
+        <circle cx="142" cy="70" r="14" fill="var(--fur-butter)"/>
+        <circle cx="100" cy="118" r="64" fill="var(--fur-butter)"/>
+        <circle cx="52" cy="128" r="26" fill="var(--fur-butter)"/>
+        <circle cx="148" cy="128" r="26" fill="var(--fur-butter)"/>
+        <circle cx="82" cy="110" r="6" fill="${ink}"/>
+        <circle cx="118" cy="110" r="6" fill="${ink}"/>
+        <ellipse cx="100" cy="126" rx="6" ry="4" fill="#B5714F"/>
+        <path d="M100,130 q-5,5 -10,2 M100,130 q5,5 10,2" stroke="${ink}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="60" cy="130" rx="8" ry="6" fill="#FFDFA0" opacity="0.7"/>
+        <ellipse cx="140" cy="130" rx="8" ry="6" fill="#FFDFA0" opacity="0.7"/>
+      `)
+    },
+    {
+      key: "owl", name: "夜ふかしフクロウ", catch: "じっと観察する思索家タイプ",
+      desc: "ひとり静かに考える夜の時間が充実の源。多くを語らず、深いところで理解し合える関係を好みます。",
+      stats: { affection: 2, freedom: 5, care: 2 }, fur: "var(--fur-sage)",
+      svg: svgHead(`
+        <polygon points="66,50 80,80 52,78" fill="${ink}"/>
+        <polygon points="134,50 120,80 148,78" fill="${ink}"/>
+        <circle cx="100" cy="115" r="60" fill="var(--fur-sage)"/>
+        <circle cx="78" cy="112" r="24" fill="var(--fur-cream)"/>
+        <circle cx="122" cy="112" r="24" fill="var(--fur-cream)"/>
+        <circle cx="78" cy="112" r="12" fill="${ink}"/>
+        <circle cx="122" cy="112" r="12" fill="${ink}"/>
+        <circle cx="81" cy="108" r="3" fill="#fff"/>
+        <circle cx="125" cy="108" r="3" fill="#fff"/>
+        <polygon points="93,132 107,132 100,146" fill="var(--fur-butter)"/>
+        <ellipse cx="55" cy="150" rx="16" ry="20" fill="var(--fur-sage)"/>
+        <ellipse cx="145" cy="150" rx="16" ry="20" fill="var(--fur-sage)"/>
+      `)
+    },
+    {
+      key: "capybara", name: "動じないカピバラさん", catch: "何があっても温泉気分の癒し系",
+      desc: "小さなことでは動じない、どっしりした安心感の持ち主。一緒にいるだけで場の空気を和ませます。",
+      stats: { affection: 3, freedom: 4, care: 2 }, fur: "var(--fur-sand)",
+      svg: svgHead(`
+        <circle cx="55" cy="88" r="12" fill="var(--fur-sand)"/>
+        <circle cx="145" cy="88" r="12" fill="var(--fur-sand)"/>
+        <ellipse cx="100" cy="120" rx="66" ry="54" fill="var(--fur-sand)"/>
+        <path d="M75,112 q6,-8 12,0" stroke="${ink}" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M113,112 q6,-8 12,0" stroke="${ink}" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <ellipse cx="100" cy="148" rx="26" ry="16" fill="#C7A374"/>
+        <ellipse cx="90" cy="146" rx="3.5" ry="3" fill="${ink}"/>
+        <ellipse cx="110" cy="146" rx="3.5" ry="3" fill="${ink}"/>
+        <path d="M88,158 q12,8 24,0" stroke="${ink}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      `)
+    },
+    {
+      key: "parakeet", name: "おしゃべりインコさん", catch: "場を明るくするムードメーカー",
+      desc: "会話とにぎやかさが元気の源。感情をまっすぐ声に出せる相手といると、いちばん自分らしくいられます。",
+      stats: { affection: 4, freedom: 3, care: 3 }, fur: "var(--fur-sage)",
+      svg: svgHead(`
+        <polygon points="100,30 88,55 112,55" fill="var(--fur-butter)"/>
+        <circle cx="100" cy="105" r="55" fill="var(--fur-sage)"/>
+        <ellipse cx="100" cy="150" rx="34" ry="40" fill="var(--fur-butter)"/>
+        <circle cx="84" cy="100" r="8" fill="#fff"/>
+        <circle cx="86" cy="100" r="4" fill="${ink}"/>
+        <polygon points="98,112 130,118 98,126" fill="#F2934A"/>
+        <ellipse cx="150" cy="120" rx="20" ry="12" fill="var(--fur-sage)" transform="rotate(20 150 120)"/>
+      `)
+    },
+    {
+      key: "hedgehog", name: "つんつんハリネズミ", catch: "最初は警戒、慣れたらとろける系",
+      desc: "心を許すまでは少し時間が必要。でも一度懐くと誰よりも甘えん坊になる、ギャップのある関係が育ちます。",
+      stats: { affection: 3, freedom: 4, care: 4 }, fur: "var(--fur-sand)",
+      svg: svgHead(`
+        <g fill="${ink}">
+          <polygon points="60,60 66,32 74,58"/><polygon points="80,50 86,22 94,50"/>
+          <polygon points="100,46 106,18 114,46"/><polygon points="120,50 126,22 134,50"/>
+          <polygon points="140,60 146,32 152,58"/>
+        </g>
+        <path d="M40,110 q60,-70 120,0 q10,60 -60,66 q-70,-6 -60,-66" fill="var(--fur-sand)"/>
+        <ellipse cx="100" cy="132" rx="34" ry="30" fill="var(--fur-cream)"/>
+        <circle cx="86" cy="126" r="4.5" fill="${ink}"/>
+        <ellipse cx="100" cy="148" rx="8" ry="6" fill="${ink}"/>
+      `)
+    },
+    {
+      key: "ferret", name: "いたずらフェレット", catch: "好奇心のままに動き回る自由人",
+      desc: "じっとしているより、興味の向くまま動き回っている方が自分らしい。予測不能な展開こそが楽しい相手です。",
+      stats: { affection: 4, freedom: 3, care: 2 }, fur: "var(--fur-sand)",
+      svg: svgHead(`
+        <ellipse cx="58" cy="72" rx="14" ry="18" fill="var(--fur-sand)"/>
+        <ellipse cx="142" cy="72" rx="14" ry="18" fill="var(--fur-sand)"/>
+        <circle cx="100" cy="115" r="60" fill="var(--fur-cream)"/>
+        <ellipse cx="78" cy="112" rx="16" ry="20" fill="${ink}" opacity="0.85" transform="rotate(-10 78 112)"/>
+        <ellipse cx="122" cy="112" rx="16" ry="20" fill="${ink}" opacity="0.85" transform="rotate(10 122 112)"/>
+        <circle cx="78" cy="112" r="5" fill="#fff"/>
+        <circle cx="122" cy="112" r="5" fill="#fff"/>
+        <ellipse cx="100" cy="140" rx="9" ry="6" fill="${ink}"/>
+        <path d="M100,146 q0,8 -8,10 M100,146 q0,8 8,10" stroke="${ink}" stroke-width="3" fill="none" stroke-linecap="round"/>
+      `)
+    },
+    {
+      key: "guineapig", name: "おしゃべりモルモット", catch: "鳴き声で気持ちを伝える人懐っこ系",
+      desc: "感じたことをすぐ声に出したい、隠しごとが苦手なタイプ。ごはんの時間になると全力で呼んでくれる関係が向いています。",
+      stats: { affection: 4, freedom: 2, care: 3 }, fur: "var(--fur-butter)",
+      svg: svgHead(`
+        <ellipse cx="62" cy="82" rx="10" ry="14" fill="var(--fur-butter)"/>
+        <ellipse cx="138" cy="82" rx="10" ry="14" fill="var(--fur-butter)"/>
+        <circle cx="100" cy="118" r="64" fill="var(--fur-butter)"/>
+        <path d="M78,64 q22,-18 44,0" stroke="var(--fur-cream)" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <circle cx="82" cy="112" r="6" fill="${ink}"/>
+        <circle cx="118" cy="112" r="6" fill="${ink}"/>
+        <ellipse cx="100" cy="132" rx="7" ry="5" fill="#B5714F"/>
+        <path d="M100,136 q-6,6 -12,2 M100,136 q6,6 12,2" stroke="${ink}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      `)
+    },
+    {
+      key: "squirrel", name: "貯め込みリスさん", catch: "活発でちょっと欲張りな働き者",
+      desc: "じっとしているのが苦手で、いつも何かに向かって動いている。将来のために備えることに幸せを感じるタイプです。",
+      stats: { affection: 2, freedom: 5, care: 3 }, fur: "var(--fur-sand)",
+      svg: svgHead(`
+        <ellipse cx="150" cy="70" rx="26" ry="42" fill="var(--fur-sand)" transform="rotate(25 150 70)"/>
+        <polygon points="60,55 72,25 84,58" fill="var(--fur-sand)"/>
+        <polygon points="116,58 128,25 140,55" fill="var(--fur-sand)"/>
+        <circle cx="100" cy="118" r="58" fill="var(--fur-sand)"/>
+        <circle cx="80" cy="112" r="6" fill="${ink}"/>
+        <circle cx="120" cy="112" r="6" fill="${ink}"/>
+        <circle cx="100" cy="140" r="10" fill="var(--fur-cream)"/>
+        <ellipse cx="100" cy="138" rx="4" ry="3" fill="#B5714F"/>
+      `)
+    },
+    {
+      key: "bunchou", name: "一途な文鳥さん", catch: "決めた相手だけを一途に想う甘えん坊",
+      desc: "広く浅くより、決めた相手にとことん尽くしたいタイプ。肩に乗るくらいの距離感が、いちばん安心できます。",
+      stats: { affection: 5, freedom: 2, care: 3 }, fur: "var(--fur-sage)",
+      svg: svgHead(`
+        <circle cx="100" cy="112" r="58" fill="${ink}"/>
+        <circle cx="76" cy="118" r="20" fill="var(--fur-cream)"/>
+        <circle cx="124" cy="118" r="20" fill="var(--fur-cream)"/>
+        <circle cx="82" cy="112" r="5" fill="#fff"/>
+        <circle cx="84" cy="112" r="2.5" fill="${ink}"/>
+        <circle cx="118" cy="112" r="5" fill="#fff"/>
+        <circle cx="116" cy="112" r="2.5" fill="${ink}"/>
+        <polygon points="90,128 110,128 100,146" fill="#E8637A"/>
+      `)
+    },
+    {
+      key: "turtle", name: "じっくりカメさん", catch: "自分のペースを崩さない長距離ランナー",
+      desc: "急かされるのが苦手で、何十年も続く関係をゆっくり育てたいタイプ。焦らない相手といると心から落ち着けます。",
+      stats: { affection: 2, freedom: 5, care: 5 }, fur: "var(--fur-sage)",
+      svg: svgHead(`
+        <path d="M40,150 q60,40 120,0 q10,-30 -10,-40 q-50,-24 -100,0 q-20,10 -10,40" fill="var(--fur-sage)"/>
+        <path d="M62,128 l18,-13 l20,10 l20,-10 l18,13" stroke="${ink}" stroke-width="2.5" fill="none" opacity="0.45"/>
+        <circle cx="100" cy="90" r="30" fill="var(--fur-sand)"/>
+        <circle cx="90" cy="86" r="4" fill="${ink}"/>
+        <circle cx="110" cy="86" r="4" fill="${ink}"/>
+        <path d="M92,100 q8,6 16,0" stroke="${ink}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      `)
+    },
+    {
+      key: "goat", name: "たくましいヤギさん", catch: "多少のことでは動じないおおらか系",
+      desc: "細かいことにこだわらず、どんと構えていたいタイプ。一緒にいると肩の力が抜ける、頼れる関係になれます。",
+      stats: { affection: 4, freedom: 3, care: 1 }, fur: "var(--fur-cream)",
+      svg: svgHead(`
+        <path d="M70,55 q-4,-26 14,-30 q6,16 -2,32z" fill="${ink}"/>
+        <path d="M130,55 q4,-26 -14,-30 q-6,16 2,32z" fill="${ink}"/>
+        <ellipse cx="55" cy="118" rx="14" ry="28" fill="var(--fur-cream)" transform="rotate(-15 55 118)"/>
+        <ellipse cx="145" cy="118" rx="14" ry="28" fill="var(--fur-cream)" transform="rotate(15 145 118)"/>
+        <circle cx="100" cy="118" r="58" fill="var(--fur-cream)"/>
+        <ellipse cx="100" cy="140" rx="26" ry="20" fill="#FDF7EC"/>
+        <rect x="86" y="110" width="6" height="10" rx="2" fill="${ink}"/>
+        <rect x="108" y="110" width="6" height="10" rx="2" fill="${ink}"/>
+        <ellipse cx="100" cy="148" rx="6" ry="4" fill="#C89A6A"/>
+      `)
+    },
+    {
+      key: "alpaca", name: "おっとりアルパカさん", catch: "見た目も中身もマイペースな癒し系",
+      desc: "急かされない、否定されない。ただそこにいるだけで安心できる関係が理想。眺めているだけで満たされる存在です。",
+      stats: { affection: 3, freedom: 4, care: 1 }, fur: "var(--fur-cream)",
+      svg: svgHead(`
+        <ellipse cx="100" cy="130" rx="50" ry="64" fill="var(--fur-cream)"/>
+        <ellipse cx="68" cy="60" rx="10" ry="24" fill="var(--fur-cream)" transform="rotate(-10 68 60)"/>
+        <ellipse cx="132" cy="60" rx="10" ry="24" fill="var(--fur-cream)" transform="rotate(10 132 60)"/>
+        <path d="M70,90 q30,-16 60,0 q4,10 -6,14 q-24,-10 -48,0 q-10,-4 -6,-14z" fill="var(--fur-sand)"/>
+        <circle cx="84" cy="108" r="6" fill="${ink}"/>
+        <circle cx="116" cy="108" r="6" fill="${ink}"/>
+        <ellipse cx="100" cy="150" rx="14" ry="18" fill="#FDF7EC"/>
+        <ellipse cx="100" cy="152" rx="5" ry="4" fill="#B5714F"/>
+      `)
+    },
+    {
+      key: "betta", name: "静かなたたずまい熱帯魚", catch: "ただ眺めているだけで満たされる存在",
+      desc: "言葉を交わさなくても成立する関係が心地いい。同じ空間にいるだけで十分という距離感を大切にしたいタイプです。",
+      stats: { affection: 1, freedom: 5, care: 5 }, fur: "var(--fur-coral)",
+      svg: svgHead(`
+        <path d="M150,110 q40,-30 46,-46 q-6,40 -20,46 q14,6 20,46 q-6,-16 -46,-46z" fill="var(--fur-coral)" opacity="0.85"/>
+        <path d="M60,90 q40,-26 80,0 q-10,-30 -20,-34 q-10,20 -20,26 q-10,-6 -20,-26 q-10,4 -20,34z" fill="var(--fur-coral)" opacity="0.85"/>
+        <path d="M40,110 q60,-46 120,0 q-60,46 -120,0z" fill="var(--fur-sage)"/>
+        <circle cx="70" cy="108" r="7" fill="#fff"/>
+        <circle cx="68" cy="108" r="3.5" fill="${ink}"/>
+      `)
+    }
+  ];
+
+  const OWNER_ICONS = {
+    male: `<svg viewBox="0 0 40 40"><circle cx="20" cy="16" r="9" fill="${ink}"/><path d="M6,36 q14,-16 28,0 z" fill="${ink}"/></svg>`,
+    female: `<svg viewBox="0 0 40 40"><path d="M11,14 a9,9 0 0 1 18,0 q1,10 -3,16 l-2,-6 q-5,3 -8,0 l-2,6 q-4,-6 -3,-16" fill="${ink}"/><path d="M5,37 q15,-15 30,0 z" fill="${ink}"/></svg>`,
+    neutral: `<svg viewBox="0 0 40 40"><circle cx="20" cy="15" r="8.5" fill="${ink}"/><path d="M13,15 q7,-9 14,0" fill="none" stroke="${ink}" stroke-width="2"/><path d="M7,37 q13,-15 26,0 z" fill="${ink}"/></svg>`
+  };
+
+  const SCALE = { a: 1, b: 2, c: 4, d: 5 };
+
+  function nearestAnimalIndex(userVec) {
+    let bestIdx = 0;
+    let bestDist = Infinity;
+    ANIMALS.forEach((animal, i) => {
+      const s = animal.stats;
+      const dist = Math.abs(s.affection - userVec.affection)
+        + Math.abs(s.freedom - userVec.freedom)
+        + Math.abs(s.care - userVec.care);
+      if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+    });
+    return bestIdx;
+  }
+
+  let answers = { 1: null, 2: null, 3: null };
+  let gender = "neutral";
+  let showArt = true;
+  let currentAnimal = ANIMALS[0];
+
+  document.querySelectorAll(".choices").forEach((group) => {
+    const qNum = group.dataset.q;
+    group.querySelectorAll(".choice").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        group.querySelectorAll(".choice").forEach((b) => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        answers[qNum] = btn.dataset.v;
+        document.getElementById("submitBtn").disabled = !(answers[1] && answers[2] && answers[3]);
+      });
+    });
+  });
+
+  document.getElementById("submitBtn").addEventListener("click", () => {
+    const userVec = {
+      affection: SCALE[answers[1]],
+      freedom: SCALE[answers[2]],
+      care: SCALE[answers[3]]
+    };
+    const idx = nearestAnimalIndex(userVec);
+    currentAnimal = ANIMALS[idx];
+    renderResult(idx);
+    document.getElementById("quizWrap").classList.add("hidden");
+    document.getElementById("resultWrap").classList.add("active");
+  });
+
+  document.getElementById("retryBtn").addEventListener("click", () => {
+    answers = { 1: null, 2: null, 3: null };
+    document.querySelectorAll(".choice.selected").forEach((b) => b.classList.remove("selected"));
+    document.getElementById("submitBtn").disabled = true;
+    document.getElementById("resultWrap").classList.remove("active");
+    document.getElementById("quizWrap").classList.remove("hidden");
+  });
+
+  document.getElementById("genderToggle").addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-g]");
+    if (!btn) return;
+    gender = btn.dataset.g;
+    document.querySelectorAll("#genderToggle button").forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("ownerBadge").innerHTML = OWNER_ICONS[gender];
+  });
+
+  document.getElementById("artSwitch").addEventListener("click", () => {
+    showArt = !showArt;
+    document.getElementById("artSwitch").classList.toggle("on", showArt);
+    renderArt();
+  });
+
+  function dots(n) {
+    let out = '<span class="dots">';
+    for (let i = 1; i <= 5; i++) out += `<span class="dot ${i <= n ? "on" : ""}"></span>`;
+    return out + "</span>";
+  }
+
+  function renderArt() {
+    const el = document.getElementById("artCircle");
+    if (showArt) {
+      el.classList.remove("no-art");
+      el.innerHTML = currentAnimal.svg;
+    } else {
+      el.classList.add("no-art");
+      el.innerHTML = `<span class="catalog-big">No.${String(ANIMALS.indexOf(currentAnimal) + 1).padStart(2, "0")}</span><span class="paw-row">🐾 🐾 🐾</span><span class="of-total">/ ${ANIMALS.length}</span>`;
+    }
+  }
+
+  function renderResult(idx) {
+    document.getElementById("catalogNo").textContent = `No.${String(idx + 1).padStart(2, "0")} / ${ANIMALS.length}`;
+    document.getElementById("typeName").textContent = currentAnimal.name;
+    document.getElementById("typeCatch").textContent = currentAnimal.catch;
+    document.getElementById("typeDesc").textContent = currentAnimal.desc;
+    document.getElementById("ownerBadge").innerHTML = OWNER_ICONS[gender];
+    document.getElementById("stats").innerHTML = `
+      <div class="stat"><span class="label">なつき度</span>${dots(currentAnimal.stats.affection)}</div>
+      <div class="stat"><span class="label">自由さ</span>${dots(currentAnimal.stats.freedom)}</div>
+      <div class="stat"><span class="label">お世話らくらく度</span>${dots(currentAnimal.stats.care)}</div>
+    `;
+    renderArt();
+  }
+})();
+</script>
