@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>月次コメント自動生成ツール | Addness</title>
+<style>
+  :root{
+    --bg:#f5f6f8; --panel:#ffffff; --ink:#1b2430; --muted:#5d6b7d;
+    --line:#dfe4ea; --accent:#1f4e79; --accent-soft:#eaf1f8;
+    --good:#0f7b52; --warn:#a8600b; --radius:10px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12171d; --panel:#1a2129; --ink:#e6ebf1; --muted:#9aa8b8;
+      --line:#2b3542; --accent:#6fa8dc; --accent-soft:#1f2b36;
+      --good:#5bc294; --warn:#e0a758;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif;
+    line-height:1.7;font-size:15px}
+  header{background:var(--accent);color:#fff;padding:22px 20px}
+  @media (prefers-color-scheme: dark){header{background:#16202a}}
+  header .wrap{max-width:1140px;margin:0 auto}
+  header h1{margin:0;font-size:20px;letter-spacing:.02em}
+  header p{margin:6px 0 0;font-size:13px;opacity:.85}
+  main{max-width:1140px;margin:0 auto;padding:20px}
+  .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+  @media (max-width:860px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px;margin-bottom:18px}
+  h2{font-size:15px;margin:0 0 14px;padding-bottom:9px;border-bottom:2px solid var(--accent);
+    display:inline-block}
+  label{display:block;font-size:12.5px;color:var(--muted);margin:12px 0 5px;font-weight:600}
+  input[type=text],input[type=number],select,textarea{
+    width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:6px;
+    background:var(--bg);color:var(--ink);font-family:inherit;font-size:14px}
+  textarea{resize:vertical;line-height:1.6}
+  #csv{height:190px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;white-space:pre}
+  #out{height:430px;font-size:13.5px}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row>*{flex:1 1 150px;min-width:0}
+  .btns{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+  button{padding:10px 17px;border-radius:6px;border:1px solid var(--accent);cursor:pointer;
+    font-family:inherit;font-size:14px;font-weight:600;background:var(--accent);color:#fff}
+  @media (prefers-color-scheme: dark){button{color:#0f1519}}
+  button.ghost{background:transparent;color:var(--accent)}
+  button:hover{opacity:.88}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:10px;margin-bottom:14px}
+  .card{background:var(--accent-soft);border-radius:8px;padding:11px 12px}
+  .card .k{font-size:11.5px;color:var(--muted);font-weight:600}
+  .card .v{font-size:17px;font-weight:700;margin-top:3px;font-variant-numeric:tabular-nums}
+  .card .d{font-size:11.5px;margin-top:2px}
+  .up{color:var(--good)} .down{color:var(--warn)}
+  .timer{background:var(--accent-soft);border-left:4px solid var(--accent);
+    border-radius:6px;padding:12px 14px;margin-top:14px;font-size:13.5px}
+  .timer b{font-size:16px;font-variant-numeric:tabular-nums}
+  .hint{font-size:12px;color:var(--muted);margin-top:8px}
+  .err{color:#c0392b;font-size:13px;margin-top:10px;white-space:pre-wrap}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
+  th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right}
+  th:first-child,td:first-child{text-align:left}
+  th{color:var(--muted);font-weight:600}
+  td.num{font-variant-numeric:tabular-nums}
+  footer{max-width:1140px;margin:0 auto;padding:8px 20px 36px;font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>月次コメント自動生成ツール</h1>
+  <p>試算表CSVを貼るだけで、顧問先へそのまま送れる月次報告コメントを生成します（通信なし・ブラウザ内で完結）</p>
+</div></header>
+
+<main>
+<div class="grid">
+  <section>
+    <div class="panel">
+      <h2>1. 試算表データ</h2>
+      <label for="csv">CSV（勘定科目, 当月, 前月, 前年同月）</label>
+      <textarea id="csv" spellcheck="false" placeholder="勘定科目,当月,前月,前年同月&#10;売上高,12500000,11800000,10900000"></textarea>
+      <div class="btns">
+        <button class="ghost" id="loadSample">サンプルを読み込む</button>
+        <button class="ghost" id="pickFile">CSVファイルを選ぶ</button>
+        <input type="file" id="file" accept=".csv,text/csv" hidden>
+      </div>
+      <p class="hint">1行目はヘッダー。「前年同月」列は省略可。▲△（ ）付きの負数、全角数字、カンマ区切りに対応します。</p>
+      <div class="err" id="err"></div>
+    </div>
+
+    <div class="panel">
+      <h2>2. 出力の設定</h2>
+      <div class="row">
+        <div><label for="client">顧問先名</label><input type="text" id="client" value="株式会社サンプル"></div>
+        <div><label for="office">事務所名</label><input type="text" id="office" value="Addness"></div>
+      </div>
+      <div class="row">
+        <div><label for="period">対象月</label><input type="text" id="period" value="2026年8月度"></div>
+        <div><label for="tone">文体</label>
+          <select id="tone">
+            <option value="polite">ていねい（送付メール向け）</option>
+            <option value="brief">簡潔（面談メモ向け）</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div><label for="manual">手作業だと何分かかる想定か</label><input type="number" id="manual" value="45" min="1"></div>
+      </div>
+      <div class="btns"><button id="run">コメントを生成する</button></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="panel">
+      <h2>3. 生成結果</h2>
+      <div class="cards" id="cards"></div>
+      <textarea id="out" readonly placeholder="左でデータを入れて「コメントを生成する」を押してください。"></textarea>
+      <div class="btns">
+        <button id="copy">コメントをコピー</button>
+        <button class="ghost" id="dl">テキストで保存</button>
+      </div>
+      <div class="timer" id="timer" hidden></div>
+      <div id="movers"></div>
+    </div>
+  </section>
+</div>
+</main>
+<footer>Addness ／ Claude Code 導入支援デモ。データは送信されず、すべてブラウザ内で処理されます。</footer>
+
+<script>
+"use strict";
+
+const SAMPLE = `勘定科目,当月,前月,前年同月
+売上高,12500000,11800000,10900000
+売上原価,7650000,7000000,6450000
+販売費及び一般管理費,3900000,3700000,3450000
+役員報酬,1000000,1000000,1000000
+給料手当,1450000,1400000,1300000
+法定福利費,240000,232000,214000
+広告宣伝費,380000,180000,220000
+旅費交通費,96000,88000,72000
+地代家賃,450000,450000,450000
+水道光熱費,88000,102000,79000
+通信費,64000,63000,61000
+支払手数料,132000,115000,98000
+営業利益,950000,1100000,1000000
+現金及び預金,16800000,17900000,14200000
+売掛金,10900000,9200000,8400000
+買掛金,5100000,4900000,4600000
+長期借入金,23600000,24000000,26800000`;
+
+const ALIAS = {
+  sales: ["売上高","売上","純売上高","売上金額","売上合計","売上高合計"],
+  cogs:  ["売上原価","売上原価計","仕入高","当期売上原価","売上原価合計"],
+  sga:   ["販売費及び一般管理費","販売費及一般管理費","販管費","販売管理費","販売費一般管理費"],
+  op:    ["営業利益","営業利益金額","営業損益"],
+  cash:  ["現金及び預金","現預金","現金預金","現金・預金","現金及び預金計","現金及び預金合計"],
+  ar:    ["売掛金","受取手形及び売掛金","売掛債権"],
+  ap:    ["買掛金","支払手形及び買掛金","仕入債務"]
+};
+
+/* ---------- 入力の正規化 ---------- */
+function normName(s){
+  return String(s)
+    .replace(/[Ａ-Ｚａ-ｚ０-９]/g, c => String.fromCharCode(c.charCodeAt(0)-0xFEE0))
+    .replace(/[\s　・]/g, "")
+    .trim();
+}
+function toNum(s){
+  if (s == null) return null;
+  let t = String(s)
+    .replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0)-0xFEE0))
+    .replace(/[，,\s　円"']/g, "")
+    .trim();
+  if (!t) return null;
+  let neg = false;
+  if (/^[▲△−ー-]/.test(t)) { neg = true; t = t.slice(1); }
+  if (/^\(.*\)$/.test(t) || /^（.*）$/.test(t)) { neg = true; t = t.slice(1,-1); }
+  const n = Number(t);
+  if (!isFinite(n)) return null;
+  return neg ? -n : n;
+}
+function splitLine(line){
+  const out = []; let cur = ""; let q = false;
+  for (const ch of line){
+    if (ch === '"') { q = !q; continue; }
+    if ((ch === "," || ch === "\t") && !q) { out.push(cur); cur = ""; continue; }
+    cur += ch;
+  }
+  out.push(cur);
+  return out;
+}
+function parseCSV(text){
+  const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  if (lines.length < 2) throw new Error("データが足りません。ヘッダー行と、少なくとも1件の勘定科目行が必要です。");
+  const rows = [];
+  // 1行目は、2列目が数値として読めなければヘッダーとみなす
+  const first = splitLine(lines[0]);
+  const start = (toNum(first[1]) === null) ? 1 : 0;
+  for (let i = start; i < lines.length; i++){
+    const c = splitLine(lines[i]);
+    const name = normName(c[0] || "");
+    if (!name) continue;
+    const cur = toNum(c[1]), prev = toNum(c[2]), yoy = toNum(c[3]);
+    if (cur === null) continue;
+    rows.push({ name, cur, prev, yoy });
+  }
+  if (!rows.length) throw new Error("金額を読み取れる行がありませんでした。2列目に当月の金額が入っているか確認してください。");
+  return rows;
+}
+
+/* ---------- 分析 ---------- */
+function pick(rows, key){
+  const names = ALIAS[key];
+  return rows.find(r => names.includes(r.name)) || null;
+}
+function sumBy(rows, re){
+  const hit = rows.filter(r => re.test(r.name));
+  if (!hit.length) return null;
+  return hit.reduce((a,r) => ({
+    name: "借入金",
+    cur: a.cur + r.cur,
+    prev: (a.prev === null || r.prev === null) ? null : a.prev + r.prev,
+    yoy: (a.yoy === null || r.yoy === null) ? null : a.yoy + r.yoy
+  }), {name:"借入金", cur:0, prev:0, yoy:0});
+}
+function pct(cur, base){
+  if (base === null || base === 0 || cur === null) return null;
+  return (cur - base) / Math.abs(base) * 100;
+}
+function analyze(rows){
+  const a = {};
+  for (const k of Object.keys(ALIAS)) a[k] = pick(rows, k);
+  a.loan = sumBy(rows, /借入金/);
+
+  if (!a.sales)
+    a.sales = rows.find(r => /売上/.test(r.name) && !/(原価|値引|返品|割戻|総利益|割引)/.test(r.name)) || null;
+  if (!a.sales)
+    throw new Error("売上高の行が見つかりませんでした。「売上高」「売上」など、売上を表す勘定科目の行が必要です。");
+
+
+  const known = new Set();
+  for (const k of Object.keys(ALIAS)) if (a[k]) known.add(a[k].name);
+  rows.filter(r => /借入金/.test(r.name)).forEach(r => known.add(r.name));
+  a.details = rows.filter(r => !known.has(r.name) && !/(合計|計)$/.test(r.name));
+
+  const s = a.sales;
+  a.salesMoM = pct(s.cur, s.prev);
+  a.salesYoY = pct(s.cur, s.yoy);
+
+  if (a.cogs){
+    a.gpCur  = s.cur - a.cogs.cur;
+    a.gmCur  = s.cur ? a.gpCur / s.cur * 100 : null;
+    a.gmPrev = (s.prev && a.cogs.prev !== null) ? (s.prev - a.cogs.prev) / s.prev * 100 : null;
+    a.gmYoY  = (s.yoy && a.cogs.yoy !== null) ? (s.yoy - a.cogs.yoy) / s.yoy * 100 : null;
+  }
+  if (a.op){
+    a.opMoM = pct(a.op.cur, a.op.prev);
+    a.opYoY = pct(a.op.cur, a.op.yoy);
+    a.opMargin = s.cur ? a.op.cur / s.cur * 100 : null;
+  }
+  if (a.sga) a.sgaMoM = pct(a.sga.cur, a.sga.prev);
+  if (a.cash){
+    a.cashMoM = pct(a.cash.cur, a.cash.prev);
+    a.cashMonths = s.cur ? a.cash.cur / s.cur : null;
+  }
+  if (a.ar) a.arMoM = pct(a.ar.cur, a.ar.prev);
+  if (a.loan) a.loanMoM = pct(a.loan.cur, a.loan.prev);
+
+  // 前月比の増減が大きい経費科目
+  a.movers = a.details
+    .filter(r => r.prev !== null && r.prev !== 0)
+    .map(r => ({ name: r.name, cur: r.cur, prev: r.prev, diff: r.cur - r.prev, p: pct(r.cur, r.prev) }))
+    .filter(m => Math.abs(m.diff) >= 100000 || (Math.abs(m.p) >= 30 && Math.abs(m.diff) >= 30000))
+    .sort((x,y) => Math.abs(y.diff) - Math.abs(x.diff))
+    .slice(0, 3);
+
+  return a;
+}
+
+/* ---------- 表示用の整形 ---------- */
+const yen = n => (n === null || n === undefined) ? "—" : Math.round(n).toLocaleString("ja-JP") + "円";
+const p1  = n => (n === null || n === undefined) ? "—" : (n >= 0 ? "+" : "") + n.toFixed(1) + "%";
+const pt1 = n => (n === null || n === undefined) ? "—" : n.toFixed(1) + "%";
+const updown = n => n >= 0 ? "増加" : "減少";
+
+/* ---------- コメント生成 ---------- */
+function generate(a, o){
+  const L = [];
+  const brief = o.tone === "brief";
+
+  if (!brief){
+    L.push(`${o.client} ご担当者様`, "");
+    L.push(`いつもお世話になっております。${o.office}です。`);
+    L.push(`${o.period}の月次試算表がまとまりましたので、要点をご報告いたします。`, "");
+  } else {
+    L.push(`${o.client} ／ ${o.period} 月次サマリー`, "");
+  }
+
+  /* 業績 */
+  L.push("■ 今月の業績");
+  const sl = [`売上高は ${yen(a.sales.cur)}`];
+  if (a.salesYoY !== null) sl.push(`前年同月比 ${p1(a.salesYoY)}（${yen(Math.abs(a.sales.cur - a.sales.yoy))}の${updown(a.salesYoY)}）`);
+  if (a.salesMoM !== null) sl.push(`前月比 ${p1(a.salesMoM)}`);
+  L.push("・" + sl.join("、") + "でした。");
+
+  if (a.gmCur !== null && a.gmCur !== undefined){
+    let g = `・売上総利益は ${yen(a.gpCur)}、売上総利益率は ${pt1(a.gmCur)}`;
+    if (a.gmPrev !== null) g += `（前月 ${pt1(a.gmPrev)}）`;
+    L.push(g + "です。");
+  }
+  if (a.op){
+    const loss = a.op.cur < 0;
+    let t = loss ? `・営業損失 ${yen(Math.abs(a.op.cur))} を計上しています`
+                 : `・営業利益は ${yen(a.op.cur)}`;
+    if (a.opMargin !== null) t += `（売上高営業利益率 ${pt1(a.opMargin)}）`;
+    const flipped = a.op.prev !== null && (a.op.prev < 0) !== loss;
+    if (flipped){
+      t += `。前月の${a.op.prev < 0 ? "営業損失" : "営業利益"} ${yen(Math.abs(a.op.prev))} から損益が反転しています。`;
+    } else {
+      if (a.opMoM !== null) t += `、前月比 ${p1(a.opMoM)}`;
+      t += "です。";
+    }
+    L.push(t);
+  }
+  L.push("");
+
+  /* 好調な点 */
+  const good = [];
+  if (a.salesYoY !== null && a.salesYoY > 0) good.push(`売上高は前年同月を ${p1(a.salesYoY)} 上回り、伸びを維持しています。`);
+  if (a.gmPrev !== null && a.gmCur - a.gmPrev >= 0.5) good.push(`売上総利益率が前月から ${(a.gmCur - a.gmPrev).toFixed(1)}ポイント改善しています。`);
+  if (a.opYoY !== null && a.opYoY > 0) good.push(`営業利益は前年同月比 ${p1(a.opYoY)} と、前年を上回っています。`);
+  if (a.loanMoM !== null && a.loanMoM < 0) good.push(`借入金残高は前月から ${yen(Math.abs(a.loan.cur - a.loan.prev))} 減少し、返済が順調に進んでいます。`);
+  if (good.length){
+    L.push("■ good");
+    good.forEach(g => L.push("・" + g));
+    L.push("");
+  }
+
+  /* 注意点 */
+  const watch = [];
+  if (a.gmPrev !== null && a.gmCur - a.gmPrev <= -0.5)
+    watch.push(`売上総利益率が前月の ${pt1(a.gmPrev)} から ${pt1(a.gmCur)} へ ${Math.abs(a.gmCur - a.gmPrev).toFixed(1)}ポイント低下しています。仕入単価か販売価格のどちらが要因か、切り分けておきたいところです。`);
+  if (a.sgaMoM !== null && a.sgaMoM >= 3)
+    watch.push(`販管費が前月比 ${p1(a.sgaMoM)}（${yen(Math.abs(a.sga.cur - a.sga.prev))}の増加）と増えています。`);
+  a.movers.forEach(m => {
+    watch.push(`${m.name}が前月比 ${p1(m.p)}（${yen(Math.abs(m.diff))}の${updown(m.diff)}）となっています。${m.diff > 0 ? "一時的な支出か、今後も続くものかご確認ください。" : "計上漏れがないかご確認ください。"}`);
+  });
+  if (a.arMoM !== null && a.salesMoM !== null && a.arMoM - a.salesMoM >= 10)
+    watch.push(`売掛金の増加ペース（前月比 ${p1(a.arMoM)}）が売上の伸び（${p1(a.salesMoM)}）を上回っています。回収サイトの長期化や滞留がないか確認をおすすめします。`);
+  if (a.cashMonths !== null && a.cashMonths < 1)
+    watch.push(`現預金残高は月商の ${a.cashMonths.toFixed(1)}か月分です。1か月分を下回っているため、資金繰り表での先行き確認をおすすめします。`);
+  if (a.op && a.op.cur < 0)
+    watch.push(`営業損益が赤字となっています。売上と費用のどちらの影響が大きいか、内訳の確認が必要です。`);
+  else if (a.opMoM !== null && a.opMoM <= -10)
+    watch.push(`営業利益が前月比 ${p1(a.opMoM)} と落ち込んでいます。売上と費用のどちらの影響が大きいか、内訳の確認が必要です。`);
+  if (watch.length){
+    L.push("■ 注意して見ておきたい点");
+    watch.forEach(w => L.push("・" + w));
+    L.push("");
+  }
+
+  /* 資金 */
+  if (a.cash || a.loan){
+    L.push("■ 資金の状況");
+    if (a.cash){
+      let c = `・現預金残高は ${yen(a.cash.cur)}`;
+      if (a.cashMoM !== null) c += `（前月比 ${p1(a.cashMoM)}）`;
+      if (a.cashMonths !== null) c += `。月商の ${a.cashMonths.toFixed(1)}か月分にあたります`;
+      L.push(c + "。");
+    }
+    if (a.loan){
+      let b = `・借入金残高は ${yen(a.loan.cur)}`;
+      if (a.loanMoM !== null) b += `（前月比 ${p1(a.loanMoM)}）`;
+      L.push(b + "。");
+    }
+    L.push("");
+  }
+
+  /* 提案 */
+  const act = [];
+  if (a.gmPrev !== null && a.gmCur - a.gmPrev <= -0.5) act.push("原価率の変動要因を、主要取引先・商品別に分解して確認する");
+  if (a.movers.some(m => m.diff > 0)) act.push(`${a.movers.filter(m=>m.diff>0)[0].name}の内訳を確認し、継続的な支出かどうかを切り分ける`);
+  if (a.cashMonths !== null && a.cashMonths < 1.5) act.push("向こう3か月の資金繰り表を作成し、入出金のタイミングを可視化する");
+  if (a.arMoM !== null && a.salesMoM !== null && a.arMoM - a.salesMoM >= 10) act.push("売掛金の年齢表（滞留分析）を作成し、回収遅延先を洗い出す");
+  if (act.length < 2) act.push("当初予算（または前年実績）との対比で、着地見込みを確認する");
+  L.push("■ 来月に向けて");
+  act.slice(0,3).forEach((x,i) => L.push(`${i+1}. ${x}`));
+
+  if (!brief){
+    L.push("", "ご不明な点や、詳しくご相談されたい項目がございましたら、お気軽にご連絡ください。",
+      "引き続きよろしくお願いいたします。", "", o.office);
+  }
+  return L.join("\n");
+}
+
+/* ---------- 画面 ---------- */
+const $ = id => document.getElementById(id);
+
+function renderCards(a){
+  const c = [];
+  c.push(["売上高", yen(a.sales.cur), a.salesYoY === null ? "" : "前年同月比 " + p1(a.salesYoY), a.salesYoY]);
+  if (a.gmCur !== null && a.gmCur !== undefined){
+    const d = (a.gmPrev === null) ? null : a.gmCur - a.gmPrev;
+    c.push(["売上総利益率", pt1(a.gmCur), d === null ? "" : "前月比 " + (d>=0?"+":"") + d.toFixed(1) + "pt", d]);
+  }
+  if (a.op) c.push(["営業利益", yen(a.op.cur), a.opMoM === null ? "" : "前月比 " + p1(a.opMoM), a.opMoM]);
+  if (a.cash) c.push(["現預金 / 月商", a.cashMonths === null ? "—" : a.cashMonths.toFixed(1) + "か月", yen(a.cash.cur), a.cashMoM]);
+  $("cards").innerHTML = c.map(([k,v,d,sig]) => {
+    const cls = (sig === null || sig === undefined) ? "" : (sig >= 0 ? "up" : "down");
+    return `<div class="card"><div class="k">${k}</div><div class="v">${v}</div><div class="d ${cls}">${d}</div></div>`;
+  }).join("");
+}
+
+function renderMovers(a){
+  if (!a.movers.length){ $("movers").innerHTML = ""; return; }
+  const rows = a.movers.map(m =>
+    `<tr><td>${m.name}</td><td class="num">${yen(m.prev)}</td><td class="num">${yen(m.cur)}</td>
+     <td class="num ${m.diff>=0?"down":"up"}">${p1(m.p)}</td></tr>`).join("");
+  $("movers").innerHTML =
+    `<table><thead><tr><th>増減の大きい科目</th><th>前月</th><th>当月</th><th>前月比</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+function run(){
+  $("err").textContent = "";
+  const t0 = performance.now();
+  let a;
+  try {
+    a = analyze(parseCSV($("csv").value));
+  } catch (e) {
+    $("err").textContent = e.message;
+    $("out").value = "";
+    $("cards").innerHTML = "";
+    $("movers").innerHTML = "";
+    $("timer").hidden = true;
+    return;
+  }
+  const text = generate(a, {
+    client: $("client").value.trim() || "御社",
+    office: $("office").value.trim() || "当事務所",
+    period: $("period").value.trim() || "今月",
+    tone: $("tone").value
+  });
+  const ms = performance.now() - t0;
+
+  $("out").value = text;
+  renderCards(a);
+  renderMovers(a);
+
+  const manual = Math.max(1, Number($("manual").value) || 45);
+  const sec = Math.max(ms / 1000, 0.01);
+  $("timer").hidden = false;
+  $("timer").innerHTML =
+    `手作業の想定 ${manual}分 → 生成 <b>${sec.toFixed(2)}秒</b>。1件あたり約 <b>${manual}分</b> の短縮です。<br>` +
+    `<span style="color:var(--muted)">月1回・顧問先20社なら、年間で約 ${Math.round(manual * 20 * 12 / 60)}時間 にあたります。</span>`;
+}
+
+$("run").addEventListener("click", run);
+$("loadSample").addEventListener("click", () => { $("csv").value = SAMPLE; run(); });
+$("pickFile").addEventListener("click", () => $("file").click());
+$("file").addEventListener("change", e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = () => { $("csv").value = r.result; run(); };
+  r.readAsText(f, "UTF-8");
+});
+$("copy").addEventListener("click", async () => {
+  if (!$("out").value) return;
+  try { await navigator.clipboard.writeText($("out").value); }
+  catch { $("out").select(); document.execCommand("copy"); }
+  const b = $("copy"); const t = b.textContent;
+  b.textContent = "コピーしました"; setTimeout(() => b.textContent = t, 1400);
+});
+$("dl").addEventListener("click", () => {
+  if (!$("out").value) return;
+  const blob = new Blob([$("out").value], {type:"text/plain;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `月次コメント_${$("client").value || "顧問先"}.txt`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+</script>
+</body>
+</html>
